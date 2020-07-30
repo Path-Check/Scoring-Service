@@ -1,8 +1,8 @@
 # Scoring Service
 
-# Link to Trello Board
+## Link to Trello Board
 
-    - https://trello.com/b/dA1ZZcHp/scoring-service#
+- <https://trello.com/b/dA1ZZcHp/scoring-service>
 
 ## Project Layout
 
