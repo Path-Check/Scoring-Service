@@ -24,7 +24,7 @@
     ├── protocompile.sh
     └── server
         ├── Dockerfile
-        └── main.go <- Entry point for Notification Service
+        └── main.go <- Main entry point for Notification Service
 
     3 directories, 14 files
 
