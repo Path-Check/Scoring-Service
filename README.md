@@ -10,3 +10,8 @@
         - log.fatal: I believe this would exit the service? Unless this is a permanent error that it’s impossible to recover from, I suggest trying to recover gracefully and logging an error so that we can detect it, but don’t completely halt the service. In this case, I would say if we can’t open a file on startup of the service, definitely log.fatal. But if we’re having some kind of write error in the middle of operation, and we can still return a response to the client, we want to make sure we find out there’s a problem but we don’t want to kill the service thus rendering the app not able to notify.
     - Finalize notification.proto
         - Get a greenlight for the datastructures
+
+## Notes
+
+    - Everything is subject to change
+        - proto3 can be refactored to proto2
