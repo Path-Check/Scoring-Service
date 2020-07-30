@@ -1,0 +1,111 @@
+syntax="proto3";
+
+option go_package = ".;pb";
+
+import "google/protobuf/empty.proto";
+
+package scoringservicerpc;
+
+service NotificationServer {
+    rpc getExposureConfiguration (google.protobuf.Empty) returns (ExposureConfiguration) {}
+    rpc shouldNotify(ExposureNotificationRequest) returns (ExposureNotificationResponse) {}
+  }
+  
+  message ExposureConfiguration {
+  
+  }
+  
+  
+  // The request sent from the client to the scoring server. The entire request
+  // should be logged as is, along with the response.
+  message ExposureNotificationRequest {
+    // Information on previous notifications - this is first and foremost useful
+    // to determine false/true positives/negatives in the case where a new test
+    // result has become available in the same request.
+    message NotificationHistory {
+      repeated ExposureNotification notification = 1;
+    }
+  
+    // Exposure data: current new exposure data along with additional historical
+    // exposure data.
+    message Exposures {
+      // Note: I have *not* included ExposureSummary here, because I believe
+      // everything in it can be derived from ExposureInfo, and it doesn't have
+      // detailed enough info to be used to determine notifications.
+  
+      // All ExposureInformations received within the last <relevant number: 14?
+      // 30?> days.
+      repeated ExposureInformation information = 1;
+    }
+  
+    // This contains information about any covid test the user may have taken.
+    message UserState {
+      repeated TestData data = 1;
+    }
+  }
+  
+  message ExposureNotificationResponse {
+    repeated ExposureNotification notification = 1;
+  }
+  
+  // Data for an individual exposure notification/calendar entry. This should only
+  // be data for a single day.
+  message ExposureNotification {
+    // This is important so that we can:
+    // - measure the latency from exposure time to notification time
+    // - infer what information we had available to us to make this decision,
+    //   along with the time_received and used_in_notification fields in
+    //   ExposureInformation
+    string timestamp = 1;
+    string time_issued = 2;
+  
+    // (any other info relevant to an exposure?)
+    // Severity?
+  }
+  
+  // This comes mainly from the GAEN API but has some additional fields
+  message ExposureInformation {
+    // This is needed to know what information we had at the time of deciding
+    // whether or not to show a notification.
+    string time_received = 1;
+  
+    // If this ExposureInformation was used in a notification, record the
+    // timestamp for that.
+    // We need to know this both so we can know what exposures went into any given
+    // notification for metrics, and so we don't use the same exposure twice for
+    // different notifications.
+    string used_in_notification = 1;
+  
+  
+    // All fields below come from the framework.
+    // The day the interaction occurred.
+    string date_millis_since_epoch = 2;
+  
+    // The duration of the interaction, in 5-min increments
+    string duration_minutes = 3;
+  
+    // The time-weighted average of the attenuation.
+    int32 attenuation_value = 4;
+  
+     // The total risk score of the encounter, as calculated by the framework.
+    int32 total_risk_score = 5;
+  
+    // This should be a set of 3 ints for buckets low, medium, high.
+    int32 attenuation_durations_in_minutes = 6;
+    repeated AttenuationDurationsInMinutes duration = 7;;
+  }
+  
+  // Assume PCR (current infection) test, don't know if we have any case for
+  // antibody test currently.
+  message TestData {
+    // Day this test result was entered into the app. Note, we *don't* want this
+    // to be the exact time, since that could be used to track individual users
+    // between requests.
+    string date_received = 1;
+  
+    // true: positive, false: negative
+    bool test_result = 2;
+  
+    string date_of_test = 3;
+  }
+  
