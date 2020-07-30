@@ -49,7 +49,7 @@
             - Alternative:
 
                 - ship logs to Mongo with a capped collection (this ensures that logs are ephemeral with respect to storage limits in order to keep costs low)
-                - daily batch jobs will export a backup copy to a storage bucket as well as the big data tool of choice
+                - daily batch jobs will export a backup copy to a storage bucket as well as the big data tool of choice (bigQuery, redshift, etc)
                     - This ensures modularity, scalability, and high availability
 
         - Use Context / Cancellation for saveToFile()
