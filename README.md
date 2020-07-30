@@ -1,5 +1,29 @@
 # Scoring Service
 
+## Project Layout
+
+    - Note: this will change over time
+    .
+    ├── LICENSE
+    ├── README.md
+    ├── go.mod
+    ├── go.sum
+    ├── log
+    │   ├── Dockerfile
+    │   └── main.go <- Entry point for Log sidecar service
+    ├── pb <- Directory for the proto files
+    │   ├── linasnotificationdraft.proto
+    │   ├── log.pb.go
+    │   ├── log.proto
+    │   ├── notification.pb.go
+    │   └── notification.proto
+    ├── protocompile.sh
+    └── server
+        ├── Dockerfile
+        └── main.go <- Entry point for Notification Service
+
+    3 directories, 14 files
+
 ## TODO
 
     - Finalize log.proto
