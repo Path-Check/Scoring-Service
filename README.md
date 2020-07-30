@@ -12,7 +12,7 @@
         - Logs should output to storage bucket (s3, google storage buckets, etc)
     
     - Finalize notification.proto
-        - Get a greenlight for the datastructures
+        - Get a greenlight for the datastructures (depends on diagram)
 
     - Add a diagram
         - Finalize Dataflow
