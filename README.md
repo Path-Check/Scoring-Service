@@ -49,6 +49,7 @@
             - Alternative:
 
                 - ship logs to Mongo with a capped collection (this ensures that logs are ephemeral with respect to storage limits in order to keep costs low)
+                    - Postgres can also be used here but a separate cleanup service will be needed (unless postgres has an equivalent of a capped collection)
                 - daily batch jobs will export a backup copy to a storage bucket as well as the big data tool of choice (bigQuery, redshift, etc)
                     - This ensures modularity, scalability, and high availability
 
