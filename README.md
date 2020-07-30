@@ -4,6 +4,14 @@
 
 - <https://trello.com/b/dA1ZZcHp/scoring-service>
 
+## Important Links and References
+
+- <https://www.google.com/covid19/exposurenotifications/>
+- <https://developers.google.com/android/exposure-notifications/exposure-notifications-api>
+- <https://developer.apple.com/documentation/exposurenotification/enexposureconfiguration>
+- <https://github.com/google/exposure-notifications-server>
+- <https://github.com/google/exposure-notifications-verification-server>
+
 ## Project Layout
 
     - Note: this will change over time
@@ -53,7 +61,7 @@
                     - Postgres can also be used here but a separate cleanup service will be needed (unless postgres has an equivalent of a capped collection)
 
                 - daily batch jobs will export a backup copy to a storage bucket as well as the big data tool of choice (bigQuery, redshift, etc)
-                
+
                     - This ensures modularity, scalability, and high availability
 
         - Use Context / Cancellation for saveToFile()
@@ -62,7 +70,7 @@
     
     - Finalize notification.proto
         
-        - Get a greenlight for the datastructures (depends on diagram)
+        - Greenlight for the datastructures (depends on diagram)
 
     - Add a diagram
         
