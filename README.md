@@ -15,6 +15,8 @@
     - Add a diagram
         - Finalize Dataflow
 
+    - Add License (I'm guessing MIT)
+    
 ## Notes
 
     - Everything is subject to change
