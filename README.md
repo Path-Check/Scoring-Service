@@ -42,6 +42,10 @@
                 - New logfiles will be created on a daily basis with a timer to rotate logs according to date with ms resolution
                     - will be write only
 
+            - Alternative:
+
+                - ship logs to Mongo with a capped collection
+
         - Use Context / Cancellation for saveToFile()
 
         - Update log.fatal() accordingly
