@@ -21,3 +21,5 @@
 
     - Everything is subject to change
         - proto3 can be refactored to proto2
+
+    - Once the project seed is finished, Dev/Staging/Prod branches will be created
