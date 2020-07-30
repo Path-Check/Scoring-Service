@@ -1,0 +1,81 @@
+syntax="proto3";
+
+option go_package = ".;pb";
+
+import "google/protobuf/empty.proto";
+
+package scoringservicerpc;
+
+service NotificationServer {
+    rpc getExposureConfiguration (google.protobuf.Empty) returns (PCExposureConfiguration) {}
+    rpc shouldNotify(ExposureNotificationRequest) returns (ExposureNotificationResponse) {}
+}
+
+message PCExposureConfiguration {
+    ENExposureConfiguration config = 1;
+    repeated float attenuationBucketWeights = 2;
+    int32 triggerThresholdWeightedDuration = 3;
+}
+
+    message ENExposureConfiguration {
+        int32 minimumRiskScore = 1;
+        repeated int32 attenuationDurationThresholds = 2;
+        repeated int32 attenuationLevelValues = 3;
+        repeated int32 daysSinceLastExposure = 4;
+        repeated int32 durationLevelValues = 5;
+        repeated int32 transmissionRiskLevelValues = 6;
+    }
+
+
+message ExposureNotificationRequest {
+    repeated ExposureNotification notification = 1;
+}
+
+    message ExposureNotification {
+        string timestamp = 1;
+        ExposureInformation info = 2;
+    }
+
+        message ExposureInformation {
+            string timeReceived = 1;
+            string usedInNotification = 2;
+            string dateMillisSinceEpoch = 3;
+            string durationMinutes = 4;
+            int32 attenuationValue = 5;
+            int32 totalRiskScore = 6;
+            int32 attenuationDurationInMinutes = 7;
+        }
+
+message ExposureNotificationResponse {
+    NotificationEvents history = 1;
+    ExposureEvents event = 2;
+    UserState status = 3;
+}
+
+    message NotificationEvents {
+        repeated ExposureNotification notification = 1;
+        repeated Events event = 2;
+    }
+
+    message ExposureEvents {
+        repeated Events event = 3;
+    }
+
+        message Events {
+            string timestamp = 1;
+            int32 transmissionRiskValue = 2;
+            int32 durationRiskValue = 3;
+            int32 daysRiskValue = 4;
+            int32 attenuationRiskValue = 5;
+            int32 exposureRiskValue = 6;
+        }
+
+    message UserState {
+        repeated TestData data = 1;
+    }
+
+        message TestData {
+            string dateReceived = 1;
+            bool testResult = 2;
+            string dateOfTest = 3;
+        }
