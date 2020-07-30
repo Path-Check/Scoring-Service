@@ -49,6 +49,7 @@
             - Alternative:
 
                 - ship logs to Mongo with a capped collection
+                - daily batch jobs will export a backup copy to a storage bucket as well as the big data tool of choice
 
         - Use Context / Cancellation for saveToFile()
 
