@@ -2,29 +2,30 @@ syntax="proto3";
 
 option go_package = ".;pb";
 
-import "google/protobuf/empty.proto";
+// import "google/protobuf/empty.proto";
 
 package scoringservicerpc;
 
 service NotificationServer {
-    rpc getExposureConfiguration (google.protobuf.Empty) returns (PCExposureConfiguration) {}
+    // rpc getExposureConfiguration (google.protobuf.Empty) returns (PCExposureConfiguration) {}
     rpc shouldNotify(ExposureNotificationRequest) returns (ExposureNotificationResponse) {}
 }
 
-message PCExposureConfiguration {
-    ENExposureConfiguration config = 1;
-    repeated float attenuationBucketWeights = 2;
-    int32 triggerThresholdWeightedDuration = 3;
-}
+// Exposure Configuration is now in a bucket
+// message PCExposureConfiguration {
+//     ENExposureConfiguration config = 1;
+//     repeated float attenuationBucketWeights = 2;
+//     int32 triggerThresholdWeightedDuration = 3;
+// }
 
-    message ENExposureConfiguration {
-        int32 minimumRiskScore = 1;
-        repeated int32 attenuationDurationThresholds = 2;
-        repeated int32 attenuationLevelValues = 3;
-        repeated int32 daysSinceLastExposure = 4;
-        repeated int32 durationLevelValues = 5;
-        repeated int32 transmissionRiskLevelValues = 6;
-    }
+//     message ENExposureConfiguration {
+//         int32 minimumRiskScore = 1;
+//         repeated int32 attenuationDurationThresholds = 2;
+//         repeated int32 attenuationLevelValues = 3;
+//         repeated int32 daysSinceLastExposure = 4;
+//         repeated int32 durationLevelValues = 5;
+//         repeated int32 transmissionRiskLevelValues = 6;
+//     }
 
 
 message ExposureNotificationRequest {
@@ -32,15 +33,15 @@ message ExposureNotificationRequest {
 }
 
     message ExposureNotification {
-        string timestamp = 1;
+        int32 timestamp = 1;
         ExposureInformation info = 2;
     }
 
         message ExposureInformation {
-            string timeReceived = 1;
+            int32 timeReceived = 1;
             string usedInNotification = 2;
-            string dateMillisSinceEpoch = 3;
-            string durationMinutes = 4;
+            int32 dateMillisSinceEpoch = 3;
+            int32 durationMinutes = 4;
             int32 attenuationValue = 5;
             int32 totalRiskScore = 6;
             int32 attenuationDurationInMinutes = 7;
@@ -49,7 +50,8 @@ message ExposureNotificationRequest {
 message ExposureNotificationResponse {
     NotificationEvents history = 1;
     ExposureEvents event = 2;
-    UserState status = 3;
+    repeated ExposureInformation exposure_info = 3;
+    UserState status = 4;
 }
 
     message NotificationEvents {
@@ -62,7 +64,7 @@ message ExposureNotificationResponse {
     }
 
         message Events {
-            string timestamp = 1;
+            int32 timestamp = 1;
             int32 transmissionRiskValue = 2;
             int32 durationRiskValue = 3;
             int32 daysRiskValue = 4;

@@ -19,8 +19,8 @@ message Event {
     string Timestamp = 4;
     int32 Pid = 5;
     string Hostname = 6;
-    optional string Request = 7;
-    optional string Response = 8;
+    string Request = 7;
+    string Response = 8;
 }
 
 message EventResponse {
