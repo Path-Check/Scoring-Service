@@ -16,25 +16,22 @@
 
     - Note: this will change over time
     .
-    ├── LICENSE
-    ├── README.md
     ├── go.mod
     ├── go.sum
+    ├── LICENSE
     ├── log
     │   ├── Dockerfile
-    │   └── main.go <- Entry point for Log sidecar service
-    ├── pb <- Directory for the proto files
-    │   ├── linasnotificationdraft.proto
-    │   ├── log.pb.go
-    │   ├── log.proto
+    │   └── main.go
+    ├── pb
     │   ├── notification.pb.go
     │   └── notification.proto
     ├── protocompile.sh
+    ├── README.md
     └── server
         ├── Dockerfile
-        └── main.go <- Main entry point for Notification Service
+        └── main.go
 
-    3 directories, 14 files
+    3 directories, 11 files
 
 ## TODO
 
