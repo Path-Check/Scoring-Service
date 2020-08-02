@@ -4,7 +4,7 @@ option go_package = ".;pb";
 
 // import "google/protobuf/empty.proto";
 
-package scoringservicerpc;
+package scoringservice;
 
 service NotificationServer {
     // rpc getExposureConfiguration (google.protobuf.Empty) returns (PCExposureConfiguration) {}
