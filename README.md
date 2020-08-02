@@ -4,17 +4,7 @@
 
 - <https://trello.com/b/dA1ZZcHp/scoring-service>
 
-## Important Links and References
-
-- <https://www.google.com/covid19/exposurenotifications/>
-- <https://developers.google.com/android/exposure-notifications/exposure-notifications-api>
-- <https://developer.apple.com/documentation/exposurenotification/enexposureconfiguration>
-- <https://github.com/google/exposure-notifications-server>
-- <https://github.com/google/exposure-notifications-verification-server>
-- <https://www.aphlblog.org/bringing-covid-19-exposure-notification-to-the-public-health-community>
-- <https://www.reuters.com/article/us-health-coronavirus-britain-tracing-ap/britains-covid-19-app-the-game-changer-that-wasnt-idUSKBN2400YM>
-- <https://github.com/google/exposure-notifications-server/tree/main/examples/export>
-- <https://github.com/google/exposure-notifications-server/blob/main/examples/export/testExport-2-records-1-of-1.zip>
+## Introduction
 
 ## Project Layout
 
@@ -84,3 +74,15 @@
         - proto3 can be refactored to proto2
 
     - Once the project seed is finished, Dev/Staging/Prod branches will be created
+
+## Important Links and References
+
+- <https://www.google.com/covid19/exposurenotifications/>
+- <https://developers.google.com/android/exposure-notifications/exposure-notifications-api>
+- <https://developer.apple.com/documentation/exposurenotification/enexposureconfiguration>
+- <https://github.com/google/exposure-notifications-server>
+- <https://github.com/google/exposure-notifications-verification-server>
+- <https://www.aphlblog.org/bringing-covid-19-exposure-notification-to-the-public-health-community>
+- <https://www.reuters.com/article/us-health-coronavirus-britain-tracing-ap/britains-covid-19-app-the-game-changer-that-wasnt-idUSKBN2400YM>
+- <https://github.com/google/exposure-notifications-server/tree/main/examples/export>
+- <https://github.com/google/exposure-notifications-server/blob/main/examples/export/testExport-2-records-1-of-1.zip>
