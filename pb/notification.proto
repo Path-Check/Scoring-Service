@@ -81,3 +81,29 @@ message ExposureNotificationResponse {
             bool testResult = 2;
             string dateOfTest = 3;
         }
+
+// Unary Logger
+service Logger {
+    rpc CreateEvent (Event) returns (EventResponse);
+    rpc ReadEvent (Event) returns (EventResponse);
+    // Server Streaming Logger
+    // rpc LogEventStream (stream Event) returns (EventResponse);
+}
+
+message Event {
+    string Method = 1;
+    string RequestURI = 2;
+    string RouteName = 3;
+    string Timestamp = 4;
+    int32 Pid = 5;
+    string Hostname = 6;
+    string Request = 7;
+    string Response = 8;
+}
+
+message EventResponse {
+    bool EventLogged = 1;
+    string Timestamp = 2;
+}
+
+
