@@ -598,6 +598,164 @@ func (x *TestData) GetDateOfTest() string {
 	return ""
 }
 
+type Event struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Method     string `protobuf:"bytes,1,opt,name=Method,proto3" json:"Method,omitempty"`
+	RequestURI string `protobuf:"bytes,2,opt,name=RequestURI,proto3" json:"RequestURI,omitempty"`
+	RouteName  string `protobuf:"bytes,3,opt,name=RouteName,proto3" json:"RouteName,omitempty"`
+	Timestamp  string `protobuf:"bytes,4,opt,name=Timestamp,proto3" json:"Timestamp,omitempty"`
+	Pid        int32  `protobuf:"varint,5,opt,name=Pid,proto3" json:"Pid,omitempty"`
+	Hostname   string `protobuf:"bytes,6,opt,name=Hostname,proto3" json:"Hostname,omitempty"`
+	Request    string `protobuf:"bytes,7,opt,name=Request,proto3" json:"Request,omitempty"`
+	Response   string `protobuf:"bytes,8,opt,name=Response,proto3" json:"Response,omitempty"`
+}
+
+func (x *Event) Reset() {
+	*x = Event{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_notification_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Event) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Event) ProtoMessage() {}
+
+func (x *Event) ProtoReflect() protoreflect.Message {
+	mi := &file_notification_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Event.ProtoReflect.Descriptor instead.
+func (*Event) Descriptor() ([]byte, []int) {
+	return file_notification_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Event) GetMethod() string {
+	if x != nil {
+		return x.Method
+	}
+	return ""
+}
+
+func (x *Event) GetRequestURI() string {
+	if x != nil {
+		return x.RequestURI
+	}
+	return ""
+}
+
+func (x *Event) GetRouteName() string {
+	if x != nil {
+		return x.RouteName
+	}
+	return ""
+}
+
+func (x *Event) GetTimestamp() string {
+	if x != nil {
+		return x.Timestamp
+	}
+	return ""
+}
+
+func (x *Event) GetPid() int32 {
+	if x != nil {
+		return x.Pid
+	}
+	return 0
+}
+
+func (x *Event) GetHostname() string {
+	if x != nil {
+		return x.Hostname
+	}
+	return ""
+}
+
+func (x *Event) GetRequest() string {
+	if x != nil {
+		return x.Request
+	}
+	return ""
+}
+
+func (x *Event) GetResponse() string {
+	if x != nil {
+		return x.Response
+	}
+	return ""
+}
+
+type EventResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	EventLogged bool   `protobuf:"varint,1,opt,name=EventLogged,proto3" json:"EventLogged,omitempty"`
+	Timestamp   string `protobuf:"bytes,2,opt,name=Timestamp,proto3" json:"Timestamp,omitempty"`
+}
+
+func (x *EventResponse) Reset() {
+	*x = EventResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_notification_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EventResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EventResponse) ProtoMessage() {}
+
+func (x *EventResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_notification_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EventResponse.ProtoReflect.Descriptor instead.
+func (*EventResponse) Descriptor() ([]byte, []int) {
+	return file_notification_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *EventResponse) GetEventLogged() bool {
+	if x != nil {
+		return x.EventLogged
+	}
+	return false
+}
+
+func (x *EventResponse) GetTimestamp() string {
+	if x != nil {
+		return x.Timestamp
+	}
+	return ""
+}
+
 var File_notification_proto protoreflect.FileDescriptor
 
 var file_notification_proto_rawDesc = []byte{
@@ -699,16 +857,45 @@ var file_notification_proto_rawDesc = []byte{
 	0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x74, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
 	0x12, 0x1e, 0x0a, 0x0a, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x66, 0x54, 0x65, 0x73, 0x74, 0x18, 0x03,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x66, 0x54, 0x65, 0x73, 0x74,
-	0x32, 0x87, 0x01, 0x0a, 0x12, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x12, 0x71, 0x0a, 0x0c, 0x73, 0x68, 0x6f, 0x75, 0x6c,
-	0x64, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x79, 0x12, 0x2e, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x69, 0x6e,
-	0x67, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x78, 0x70, 0x6f,
-	0x73, 0x75, 0x72, 0x65, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x69, 0x6e,
-	0x67, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x78, 0x70, 0x6f,
-	0x73, 0x75, 0x72, 0x65, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b,
-	0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0xdf, 0x01, 0x0a, 0x05, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x4d, 0x65,
+	0x74, 0x68, 0x6f, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x4d, 0x65, 0x74, 0x68,
+	0x6f, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x55, 0x52, 0x49,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x55,
+	0x52, 0x49, 0x12, 0x1c, 0x0a, 0x09, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x1c, 0x0a, 0x09, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x10,
+	0x0a, 0x03, 0x50, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x50, 0x69, 0x64,
+	0x12, 0x1a, 0x0a, 0x08, 0x48, 0x6f, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x48, 0x6f, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x4f, 0x0a, 0x0d, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x4c, 0x6f, 0x67, 0x67,
+	0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x4c,
+	0x6f, 0x67, 0x67, 0x65, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
+	0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x32, 0x87, 0x01, 0x0a, 0x12, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x12, 0x71, 0x0a, 0x0c, 0x73, 0x68,
+	0x6f, 0x75, 0x6c, 0x64, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x79, 0x12, 0x2e, 0x2e, 0x73, 0x63, 0x6f,
+	0x72, 0x69, 0x6e, 0x67, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x72, 0x70, 0x63, 0x2e, 0x45,
+	0x78, 0x70, 0x6f, 0x73, 0x75, 0x72, 0x65, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x73, 0x63, 0x6f,
+	0x72, 0x69, 0x6e, 0x67, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x72, 0x70, 0x63, 0x2e, 0x45,
+	0x78, 0x70, 0x6f, 0x73, 0x75, 0x72, 0x65, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x32, 0x9c, 0x01,
+	0x0a, 0x06, 0x4c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x12, 0x49, 0x0a, 0x0b, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x18, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x69, 0x6e,
+	0x67, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x76, 0x65, 0x6e,
+	0x74, 0x1a, 0x20, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x69, 0x6e, 0x67, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x47, 0x0a, 0x09, 0x52, 0x65, 0x61, 0x64, 0x45, 0x76, 0x65, 0x6e, 0x74,
+	0x12, 0x18, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x69, 0x6e, 0x67, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x1a, 0x20, 0x2e, 0x73, 0x63, 0x6f,
+	0x72, 0x69, 0x6e, 0x67, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x72, 0x70, 0x63, 0x2e, 0x45,
+	0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x06, 0x5a, 0x04,
+	0x2e, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -723,7 +910,7 @@ func file_notification_proto_rawDescGZIP() []byte {
 	return file_notification_proto_rawDescData
 }
 
-var file_notification_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_notification_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_notification_proto_goTypes = []interface{}{
 	(*ExposureNotificationRequest)(nil),  // 0: scoringservicerpc.ExposureNotificationRequest
 	(*ExposureNotification)(nil),         // 1: scoringservicerpc.ExposureNotification
@@ -734,6 +921,8 @@ var file_notification_proto_goTypes = []interface{}{
 	(*Events)(nil),                       // 6: scoringservicerpc.Events
 	(*UserState)(nil),                    // 7: scoringservicerpc.UserState
 	(*TestData)(nil),                     // 8: scoringservicerpc.TestData
+	(*Event)(nil),                        // 9: scoringservicerpc.Event
+	(*EventResponse)(nil),                // 10: scoringservicerpc.EventResponse
 }
 var file_notification_proto_depIdxs = []int32{
 	1,  // 0: scoringservicerpc.ExposureNotificationRequest.notification:type_name -> scoringservicerpc.ExposureNotification
@@ -747,9 +936,13 @@ var file_notification_proto_depIdxs = []int32{
 	6,  // 8: scoringservicerpc.ExposureEvents.event:type_name -> scoringservicerpc.Events
 	8,  // 9: scoringservicerpc.UserState.data:type_name -> scoringservicerpc.TestData
 	0,  // 10: scoringservicerpc.NotificationServer.shouldNotify:input_type -> scoringservicerpc.ExposureNotificationRequest
-	3,  // 11: scoringservicerpc.NotificationServer.shouldNotify:output_type -> scoringservicerpc.ExposureNotificationResponse
-	11, // [11:12] is the sub-list for method output_type
-	10, // [10:11] is the sub-list for method input_type
+	9,  // 11: scoringservicerpc.Logger.CreateEvent:input_type -> scoringservicerpc.Event
+	9,  // 12: scoringservicerpc.Logger.ReadEvent:input_type -> scoringservicerpc.Event
+	3,  // 13: scoringservicerpc.NotificationServer.shouldNotify:output_type -> scoringservicerpc.ExposureNotificationResponse
+	10, // 14: scoringservicerpc.Logger.CreateEvent:output_type -> scoringservicerpc.EventResponse
+	10, // 15: scoringservicerpc.Logger.ReadEvent:output_type -> scoringservicerpc.EventResponse
+	13, // [13:16] is the sub-list for method output_type
+	10, // [10:13] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name
 	10, // [10:10] is the sub-list for extension extendee
 	0,  // [0:10] is the sub-list for field type_name
@@ -869,6 +1062,30 @@ func file_notification_proto_init() {
 				return nil
 			}
 		}
+		file_notification_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Event); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_notification_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EventResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -876,9 +1093,9 @@ func file_notification_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_notification_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_notification_proto_goTypes,
 		DependencyIndexes: file_notification_proto_depIdxs,
@@ -966,6 +1183,114 @@ var _NotificationServer_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "shouldNotify",
 			Handler:    _NotificationServer_ShouldNotify_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "notification.proto",
+}
+
+// LoggerClient is the client API for Logger service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type LoggerClient interface {
+	CreateEvent(ctx context.Context, in *Event, opts ...grpc.CallOption) (*EventResponse, error)
+	ReadEvent(ctx context.Context, in *Event, opts ...grpc.CallOption) (*EventResponse, error)
+}
+
+type loggerClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewLoggerClient(cc grpc.ClientConnInterface) LoggerClient {
+	return &loggerClient{cc}
+}
+
+func (c *loggerClient) CreateEvent(ctx context.Context, in *Event, opts ...grpc.CallOption) (*EventResponse, error) {
+	out := new(EventResponse)
+	err := c.cc.Invoke(ctx, "/scoringservicerpc.Logger/CreateEvent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *loggerClient) ReadEvent(ctx context.Context, in *Event, opts ...grpc.CallOption) (*EventResponse, error) {
+	out := new(EventResponse)
+	err := c.cc.Invoke(ctx, "/scoringservicerpc.Logger/ReadEvent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// LoggerServer is the server API for Logger service.
+type LoggerServer interface {
+	CreateEvent(context.Context, *Event) (*EventResponse, error)
+	ReadEvent(context.Context, *Event) (*EventResponse, error)
+}
+
+// UnimplementedLoggerServer can be embedded to have forward compatible implementations.
+type UnimplementedLoggerServer struct {
+}
+
+func (*UnimplementedLoggerServer) CreateEvent(context.Context, *Event) (*EventResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateEvent not implemented")
+}
+func (*UnimplementedLoggerServer) ReadEvent(context.Context, *Event) (*EventResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReadEvent not implemented")
+}
+
+func RegisterLoggerServer(s *grpc.Server, srv LoggerServer) {
+	s.RegisterService(&_Logger_serviceDesc, srv)
+}
+
+func _Logger_CreateEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Event)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoggerServer).CreateEvent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scoringservicerpc.Logger/CreateEvent",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoggerServer).CreateEvent(ctx, req.(*Event))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Logger_ReadEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Event)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoggerServer).ReadEvent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scoringservicerpc.Logger/ReadEvent",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoggerServer).ReadEvent(ctx, req.(*Event))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Logger_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "scoringservicerpc.Logger",
+	HandlerType: (*LoggerServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateEvent",
+			Handler:    _Logger_CreateEvent_Handler,
+		},
+		{
+			MethodName: "ReadEvent",
+			Handler:    _Logger_ReadEvent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
