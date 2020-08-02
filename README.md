@@ -21,7 +21,7 @@
     ├── LICENSE
     ├── log
     │   ├── Dockerfile
-    │   └── main.go
+    │   └── main.go     <- Entry point for Logger
     ├── pb
     │   ├── notification.pb.go
     │   └── notification.proto
@@ -29,7 +29,7 @@
     ├── README.md
     └── server
         ├── Dockerfile
-        └── main.go
+        └── main.go     <- Entry point for Notification Server
 
     3 directories, 11 files
 
