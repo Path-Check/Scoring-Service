@@ -13,7 +13,7 @@
 - <https://github.com/google/exposure-notifications-verification-server>
 - <https://www.aphlblog.org/bringing-covid-19-exposure-notification-to-the-public-health-community>
 - <https://www.reuters.com/article/us-health-coronavirus-britain-tracing-ap/britains-covid-19-app-the-game-changer-that-wasnt-idUSKBN2400YM>
-- < https://github.com/google/exposure-notifications-server/tree/main/examples/export>
+- <https://github.com/google/exposure-notifications-server/tree/main/examples/export>
 - <https://github.com/google/exposure-notifications-server/blob/main/examples/export/testExport-2-records-1-of-1.zip>
 
 ## Project Layout
