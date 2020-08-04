@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+// Log logs the event and saves it to file
+func Log() {
 	fmt.Println("Hello from Log")
 }
