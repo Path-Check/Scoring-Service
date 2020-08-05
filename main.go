@@ -56,7 +56,7 @@ func shipToLogger(req *pb.LogRequest) (res *pb.LogResponse) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	r, err := c.LogEvent(ctx, req)
+	res, err = c.LogEvent(ctx, req)
 	if err != nil {
 		log.Fatalf("could not log: %v", err)
 	}
