@@ -1,6 +1,8 @@
 #!/bin/bash
 
-protoc --proto_path=pb --go_out=plugins=grpc:pb pb/notification.proto
+# protoc --proto_path=pb --go_out=plugins=grpc:pb pb/notification1.proto
+
+protoc --proto_path=pb --go_out=plugins=grpc:pb pb/notification0.proto
 
 # protoc --proto_path=pb --go_out=plugins=grpc:pb pb/log.proto
 

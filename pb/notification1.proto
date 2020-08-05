@@ -79,7 +79,10 @@ message ExposureNotificationResponse {
 
         message TestData {
             google.protobuf.Timestamp dateReceived = 1;
-            bool testResult = 2;
+            enum TestResult {
+                POSITIVE = 1;
+                NEGATIVE = 2;
+            }
             google.protobuf.Timestamp dateOfTest = 3;
         }
 
@@ -101,6 +104,10 @@ service Logger {
     }
 
     message EventResponse {
-        bool EventLogged = 1;
+        enum Status {
+            UKNOWN = 0;
+            SUCCESS = 1;
+            FAILURE = 2;
+        }
         google.protobuf.Timestamp Timestamp = 2;
     }
