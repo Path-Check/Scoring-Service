@@ -35,9 +35,6 @@ message ExposureNotificationRequest {
 
     message ExposureNotification {
         google.protobuf.Timestamp timestamp = 1;
-        ExposureInformation info = 2;
-    }
-
         message ExposureInformation {
             google.protobuf.Timestamp timeReceived = 1;
             string usedInNotification = 2;
@@ -47,23 +44,29 @@ message ExposureNotificationRequest {
             int32 totalRiskScore = 6;
             int32 attenuationDurationInMinutes = 7;
         }
+    }
 
 message ExposureNotificationResponse {
-    NotificationEvents history = 1;
-    ExposureEvents event = 2;
-    repeated ExposureInformation exposure_info = 3;
-    UserState status = 4;
-}
-
     message NotificationEvents {
         repeated ExposureNotification notification = 1;
         repeated Events event = 2;
     }
-
     message ExposureEvents {
         repeated Events event = 3;
     }
+    repeated ExposureInformation exposure_info = 3;
+    UserState status = 4;
+}
 
+    message ExposureInformation {
+        google.protobuf.Timestamp timeReceived = 1;
+        string usedInNotification = 2;
+        google.protobuf.Timestamp dateMillisSinceEpoch = 3;
+        int32 durationMinutes = 4;
+        int32 attenuationValue = 5;
+        int32 totalRiskScore = 6;
+        int32 attenuationDurationInMinutes = 7;
+    }
         message Events {
             google.protobuf.Timestamp timestamp = 1;
             int32 transmissionRiskValue = 2;
