@@ -3,6 +3,7 @@ syntax="proto3";
 option go_package = ".;pb";
 
 // import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 package scoringservice;
 
@@ -33,14 +34,14 @@ message ExposureNotificationRequest {
 }
 
     message ExposureNotification {
-        int32 timestamp = 1;
+        google.protobuf.Timestamp timestamp = 1;
         ExposureInformation info = 2;
     }
 
         message ExposureInformation {
-            int32 timeReceived = 1;
+            google.protobuf.Timestamp timeReceived = 1;
             string usedInNotification = 2;
-            int32 dateMillisSinceEpoch = 3;
+            google.protobuf.Timestamp dateMillisSinceEpoch = 3;
             int32 durationMinutes = 4;
             int32 attenuationValue = 5;
             int32 totalRiskScore = 6;
@@ -64,7 +65,7 @@ message ExposureNotificationResponse {
     }
 
         message Events {
-            int32 timestamp = 1;
+            google.protobuf.Timestamp timestamp = 1;
             int32 transmissionRiskValue = 2;
             int32 durationRiskValue = 3;
             int32 daysRiskValue = 4;
@@ -77,10 +78,11 @@ message ExposureNotificationResponse {
     }
 
         message TestData {
-            string dateReceived = 1;
+            google.protobuf.Timestamp dateReceived = 1;
             bool testResult = 2;
-            string dateOfTest = 3;
+            google.protobuf.Timestamp dateOfTest = 3;
         }
+
 
 // Unary Logger
 service Logger {
@@ -90,20 +92,15 @@ service Logger {
     // rpc LogEventStream (stream Event) returns (EventResponse);
 }
 
-message Event {
-    string Method = 1;
-    string RequestURI = 2;
-    string RouteName = 3;
-    string Timestamp = 4;
-    int32 Pid = 5;
-    string Hostname = 6;
-    string Request = 7;
-    string Response = 8;
-}
+    message Event {
+        google.protobuf.Timestamp Timestamp = 1;
+        int32 Pid = 2;
+        string Hostname = 3;
+        ExposureNotificationRequest Request = 4;
+        ExposureNotificationResponse Response = 5;
+    }
 
-message EventResponse {
-    bool EventLogged = 1;
-    string Timestamp = 2;
-}
-
-
+    message EventResponse {
+        bool EventLogged = 1;
+        google.protobuf.Timestamp Timestamp = 2;
+    }
