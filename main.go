@@ -60,4 +60,5 @@ func shipToLogger(req *pb.LogRequest) (res *pb.LogResponse) {
 	if err != nil {
 		log.Fatalf("could not log: %v", err)
 	}
+	return
 }
