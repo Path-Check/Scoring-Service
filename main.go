@@ -31,7 +31,7 @@ func main() {
 	}
 }
 
-func (s *notificationserver) ShouldNotify(ctx context.Context, notificationRequest *pb.ExposureNotificationRequest) (res *pb.ExposureNotificationResponse, error) {
+func (s *notificationserver) ShouldNotify(ctx context.Context, notificationRequest *pb.ExposureNotificationRequest) (*pb.ExposureNotificationResponse, error) {
 	// Insert Business Logic Here
 	l := pb.LogRequest{}
 	err := shipToLogger(&l)
@@ -39,7 +39,8 @@ func (s *notificationserver) ShouldNotify(ctx context.Context, notificationReque
 	if err != nil {
 		log.Println()
 	}
-	return
+	res := &pb.ExposureNotificationResponse{}
+	return res, nil
 }
 
 func shipToLogger(req *pb.LogRequest) (res *pb.LogResponse) {
