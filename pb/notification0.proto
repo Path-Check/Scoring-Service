@@ -6,7 +6,7 @@ option go_package = ".;pb";
 
 package scoringservice;
 
-service NotificationServer {
+service Notification {
   // Send information on current and previously received exposures that haven't yet resulted in a notification.
   rpc shouldNotify(ExposureNotificationRequest) returns (ExposureNotificationResponse) {}
 }
