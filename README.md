@@ -1,8 +1,8 @@
 # Scoring Service
 
-## Link to Trello Board
+## Project Management
 
-- <https://trello.com/b/dA1ZZcHp/scoring-service>
+[Trello](https://trello.com/b/c5WZgloH/gaen-server-analytics)
 
 ## Introduction
 
