@@ -1,0 +1,50 @@
+syntax="proto2";
+
+package logger;
+option go_package = "logger/loggerpb";
+import "scoring/scoringpb/scoring.proto";
+
+// Logs data relevant for metrics and analysis.
+// Only logged for users who have consented.
+service LoggerService {
+  // Unary
+  rpc LogEvent (LogRequest) returns (LogResponse);
+}
+
+message LogRequest {
+  // Exposure notification data occurring in past 14 days. (May be none.)
+  repeated scoring.ExposureNotification exposure_notifications = 1;
+
+  // Any ExposureSummaries that have not yet led to a notification.
+  repeated scoring.ExposureSummary unused_exposure_summaries = 2;
+
+  // Any (non-PII) data pertaining to the user status.
+  repeated UserStatus user_status = 3;
+}
+
+  message UserStatus {
+    message TestData {
+      enum TestResult {
+        POSITIVE = 1;
+        NEGATIVE = 2;
+      }
+      // COVID test result.
+      optional TestResult test_result = 1;
+
+      // UNIX timestamp representing the day this test data was entered.
+      // Note about date as earlier, make sure to get this right.
+      optional int32 date_entered = 2;
+
+      // Date of COVID test.
+      optional int32 date_of_test = 3;
+    }
+  }
+
+message LogResponse {
+  enum Status {
+    UNKNOWN = 0;
+    SUCCESS = 1;
+    FAILURE = 2;
+  }
+  optional Status status = 1;
+}
