@@ -1,0 +1,5 @@
+package score
+
+func ShouldNotify() {
+
+}
