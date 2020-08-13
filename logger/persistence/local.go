@@ -40,6 +40,7 @@ func SaveToFile(f *os.File, req model.LogRequest, res model.LogResponse) (bool, 
 	return true, nil
 }
 
+// CloseFile do you need a dictionary?
 func CloseFile(f *os.File) (bool, error) {
 	hostname, _ := os.Hostname()
 	timestamp := time.Now().String()
