@@ -35,20 +35,24 @@ func SaveToRequestToFile(f *os.File, req model.LogRequest) (bool, error) {
 }
 
 // SaveToFile is pretty self explanatory
-func SaveToFile(f *os.File, req model.LogRequest, res model.LogResponse) (bool, error) {
+func SaveToResponseToFile(f *os.File, res model.LogResponse) (bool, error) {
 	resm, err := json.Marshal(res)
-	reqm, err := json.Marshal(req)
 	_, err = f.Write(resm)
-	if err != nil {
-		log.Println("Response File Write Error: %v", err)
-		return false, err
-	}
-	_, err = f.Write(reqm)
 	if err != nil {
 		log.Println("Request File Write Error: %v", err)
 		return false, err
 	}
 	return true, nil
+}
+
+// SaveToFile is pretty self explanatory
+func SaveToFile(f *os.File, req model.LogRequest, res model.LogResponse) (bool, error) {
+	reqResult, err := SaveToRequestToFile(f, req)
+	resResult, err := SaveToResponseToFile(f, res)
+	if reqResult && resResult == true {
+		return true, nil
+	}
+	return false, err
 }
 
 // CloseFile do you need a dictionary?
