@@ -23,8 +23,8 @@ func OpenFile() (*os.File, error) {
 	return l, nil
 }
 
-// SaveToFile is pretty self explanatory
-func SaveToRequestToFile(f *os.File, req model.LogRequest) (bool, error) {
+// SaveRequestToFile is pretty self explanatory
+func SaveRequestToFile(f *os.File, req model.LogRequest) (bool, error) {
 	reqm, err := json.Marshal(req)
 	_, err = f.Write(reqm)
 	if err != nil {
@@ -34,8 +34,8 @@ func SaveToRequestToFile(f *os.File, req model.LogRequest) (bool, error) {
 	return true, nil
 }
 
-// SaveToFile is pretty self explanatory
-func SaveToResponseToFile(f *os.File, res model.LogResponse) (bool, error) {
+// SaveResponseToFile is pretty self explanatory
+func SaveResponseToFile(f *os.File, res model.LogResponse) (bool, error) {
 	resm, err := json.Marshal(res)
 	_, err = f.Write(resm)
 	if err != nil {
@@ -47,8 +47,8 @@ func SaveToResponseToFile(f *os.File, res model.LogResponse) (bool, error) {
 
 // SaveToFile is pretty self explanatory
 func SaveToFile(f *os.File, req model.LogRequest, res model.LogResponse) (bool, error) {
-	reqResult, err := SaveToRequestToFile(f, req)
-	resResult, err := SaveToResponseToFile(f, res)
+	reqResult, err := SaveRequestToFile(f, req)
+	resResult, err := SaveResponseToFile(f, res)
 	if reqResult && resResult == true {
 		return true, nil
 	}
