@@ -28,7 +28,7 @@ func SaveRequestToFile(f *os.File, req model.LogRequest) (bool, error) {
 	reqm, err := json.Marshal(req)
 	_, err = f.Write(reqm)
 	if err != nil {
-		log.Println("Request File Write Error: %v", err)
+		log.Printf("Request File Write Error: %v\n", err)
 		return false, err
 	}
 	return true, nil
