@@ -39,7 +39,7 @@ func SaveToResponseToFile(f *os.File, res model.LogResponse) (bool, error) {
 	resm, err := json.Marshal(res)
 	_, err = f.Write(resm)
 	if err != nil {
-		log.Println("Request File Write Error: %v", err)
+		log.Println("Response File Write Error: %v", err)
 		return false, err
 	}
 	return true, nil
