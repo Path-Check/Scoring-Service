@@ -24,6 +24,17 @@ func OpenFile() (*os.File, error) {
 }
 
 // SaveToFile is pretty self explanatory
+func SaveToRequestToFile(f *os.File, req model.LogRequest) (bool, error) {
+	reqm, err := json.Marshal(req)
+	_, err = f.Write(reqm)
+	if err != nil {
+		log.Println("Request File Write Error: %v", err)
+		return false, err
+	}
+	return true, nil
+}
+
+// SaveToFile is pretty self explanatory
 func SaveToFile(f *os.File, req model.LogRequest, res model.LogResponse) (bool, error) {
 	resm, err := json.Marshal(res)
 	reqm, err := json.Marshal(req)
