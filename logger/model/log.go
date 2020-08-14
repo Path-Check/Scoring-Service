@@ -19,5 +19,5 @@ type TestData struct {
 }
 
 type LogResponse struct {
-	Status string `json:"status, omitempty"`
+	Status bool `json:"status, omitempty"`
 }

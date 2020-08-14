@@ -19,9 +19,24 @@ func Log(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	err = json.Unmarshal(body, &req)
 	if err != nil {
-		log.Println("Request Unmarshal Err %v", err)
+		log.Println("Request Unmarshal Err: %v", err)
 	}
 	f, err := persistence.OpenFile()
-	// result, err := persistence.SaveRequestToFile(f, req)
-	
+	if err != nil {
+		log.Println("File Open Error: %v", err)
+	}
+	logResult, err := persistence.SaveRequestToFile(f, req)
+	if err != nil {
+		log.Println("Log Save Error: %v", err)
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	err = json.NewEncoder(w).Encode(logResult)
+	if err != nil {
+		log.Println("Json Encoding Error: %v", err)
+	}
+	_, err = persistence.CloseFile(f)
+	if err != nil {
+		log.Println("Log Close Error: %v:", err)
+	}
 }

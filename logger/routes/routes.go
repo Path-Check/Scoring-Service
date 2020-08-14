@@ -24,7 +24,7 @@ var routes = Routes{
 	Route{
 		"Log",
 		"POST",
-		"/log"
+		"/log",
 		handle.Log,
 	},
 }
