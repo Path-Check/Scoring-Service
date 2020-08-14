@@ -1,7 +1,7 @@
 package routes
 
 import (
-	handle "log/handlers"
+	handle "logger/handlers"
 	"net/http"
 )
 

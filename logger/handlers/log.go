@@ -5,8 +5,8 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"log/model"
-	"log/persistence"
+	"logger/model"
+	"logger/persistence"
 	"net/http"
 )
 

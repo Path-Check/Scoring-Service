@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"log/routes"
+	"logger/routes"
 )
 
 func main() {

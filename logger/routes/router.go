@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"log/logger"
+	"logger/logger"
 	"net/http"
 
 	"github.com/gorilla/mux"

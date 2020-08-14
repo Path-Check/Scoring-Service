@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"log/model"
+	"logger/model"
 	"os"
 	"time"
 )
