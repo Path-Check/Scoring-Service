@@ -48,11 +48,14 @@ func SaveResponseToFile(f *os.File, res model.LogResponse) (bool, error) {
 // SaveToFile is pretty self explanatory
 func SaveToFile(f *os.File, req model.LogRequest, res model.LogResponse) (bool, error) {
 	reqResult, err := SaveRequestToFile(f, req)
-	resResult, err := SaveResponseToFile(f, res)
-	if reqResult && resResult == true {
-		return true, nil
+	if reqResult != true {
+		return false, err
 	}
-	return false, err
+	resResult, err := SaveResponseToFile(f, res)
+	if resResult != true {
+		return false, err
+	}
+	return true, nil
 }
 
 // CloseFile do you need a dictionary?

@@ -21,5 +21,7 @@ func Log(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("Request Unmarshal Err %v", err)
 	}
-	result, err := persistence.SaveToRequestToFile(f, req)
+	f, err := persistence.OpenFile()
+	// result, err := persistence.SaveRequestToFile(f, req)
+	
 }
