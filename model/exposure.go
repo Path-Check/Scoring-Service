@@ -1,7 +1,8 @@
 package model
 
 type ExposureNotificationRequest struct {
-  ExposureSummaries      []ExposureSummary   `json:"exposure_summaries"`
+  NewExposureSummary     ExposureSummary     `json:"new_exposure_summary"`
+  UnusedExposureSummaries      []ExposureSummary   `json:"unused_exposure_summaries"`
 }
 
 type ExposureSummary struct {
@@ -26,7 +27,7 @@ type ExposureNotificationResponse struct {
 }
 
 type Notification struct {
-  ExposureSummaryRefs    []ExposureSummaryRef `json:"exposure_summary_refs"`
+  ExposureSummaries      []ExposureSummary `json:"exposure_summaries"`
   DurationSeconds        int     `json:"duration_seconds"`
   // Note: we must have dateOfExposure OR dateMostRecentExposure + matchedKeyCount, but NOT both.
   DateOfExposure         int     `json:"date_of_exposure, omitempty"`
