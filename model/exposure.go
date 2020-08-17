@@ -34,8 +34,3 @@ type Notification struct {
   DateMostRecentExposure int     `json:"date_most_recent_exposure, omitempty"`
   MatchedKeyCount        int     `json:"matched_key_count, omitempty"`
 }
-
-type ExposureSummaryRef struct {
-  DateReceived           int     `json:"date_received, omitempty"`
-  SeqNoInDay             int     `json:"seq_no_in_day, omitempty"`
-}
