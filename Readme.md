@@ -9,23 +9,7 @@
 ## Project Layout
 
     - Note: this will change over time
-    .
-    ├── go.mod
-    ├── go.sum
-    ├── LICENSE
-    ├── log
-    │   ├── Dockerfile
-    │   └── main.go     <- Entry point for Logger
-    ├── pb
-    │   ├── notification.pb.go
-    │   └── notification.proto
-    ├── protocompile.sh
-    ├── README.md
-    └── server
-        ├── Dockerfile
-        └── main.go     <- Entry point for Notification Server
-
-    3 directories, 11 files
+    
 
 ## TODO
 
@@ -56,14 +40,6 @@
     - Add a diagram
         
         - Finalize Dataflow
-
-## Notes
-
-    - Everything is subject to change
-        
-        - proto3 can be refactored to proto2
-
-    - Once the project seed is finished, Dev/Staging/Prod branches will be created
 
 ## Important Links and References
 

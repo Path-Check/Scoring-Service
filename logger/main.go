@@ -1,13 +1,7 @@
 package main
 
-import (
-	"log"
-	"net/http"
-
-	"logger/routes"
-)
+import "github.com/aws/aws-lambda-go/lambda"
 
 func main() {
-	router := routes.NewRouter()
-	log.Fatal(http.ListenAndServe(":8080", router))
+	lambda.Start(Handler)
 }

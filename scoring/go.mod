@@ -1,5 +1,5 @@
-module scoringservice
+module scoring
 
 go 1.14
 
-require github.com/gorilla/mux v1.7.4
+require github.com/aws/aws-lambda-go v1.19.1
