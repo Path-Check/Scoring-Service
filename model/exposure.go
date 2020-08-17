@@ -1,7 +1,5 @@
 package model
 
-// Apparently these type names need to start with a capital letter or things
-// won't be parsed and really, Go, you're gonna be that picky?
 type ExposureNotificationRequest struct {
   ExposureSummaries      []ExposureSummary   `json:"exposure_summaries"`
 }
