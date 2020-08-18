@@ -2,35 +2,36 @@ package model
 
 type ExposureNotificationRequest struct {
   NewExposureSummary     ExposureSummary     `json:"new_exposure_summary"`
-  UnusedExposureSummaries      []ExposureSummary   `json:"unused_exposure_summaries"`
+  UnusedExposureSummaries      []ExposureSummary   `json:"unused_exposure_summaries,omitempty"`
 }
 
 type ExposureSummary struct {
-  DateReceived           int     `json:"date_received, omitempty"`
-  TimezoneOffset         int     `json:"timezone_offset, omitempty"`
-  SeqNoInDay             int     `json:"seq_no_in_day, omitempty"`
-  AttenuationDurations   AttenuationDurations     `json:"attenuation_durations, omitempty"`
-  MatchedKeyCount        int     `json:"matched_key_count, omitempty"`
-  DaysSinceLastExposure  int     `json:"days_since_last_exposure, omitempty"`
-  MaximumRiskScore       int     `json:"maximum_risk_score, omitempty"`
-  RiskScoreSum           int     `json:"risk_score_sum, omitempty"`
+  DateReceived           int     `json:"date_received,omitempty"`
+  TimezoneOffset         int     `json:"timezone_offset,omitempty"`
+  SeqNoInDay             int     `json:"seq_no_in_day,omitempty"`
+  AttenuationDurations   AttenuationDurations     `json:"attenuation_durations,omitempty"`
+  MatchedKeyCount        int     `json:"matched_key_count,omitempty"`
+  DaysSinceLastExposure  int     `json:"days_since_last_exposure,omitempty"`
+  MaximumRiskScore       int     `json:"maximum_risk_score,omitempty"`
+  RiskScoreSum           int     `json:"risk_score_sum,omitempty"`
 }
 
+// TODO: This whole omitemtpy business is very confusing. There doesn't seem to be a difference between the default value explicitly being filled out, and it missing. Those are not the same. Can we deal with this better?
 type AttenuationDurations struct {
-  Low    int `json:"low, omitempty"`
-  Medium int `json:"medium, omitempty"`
-  High   int `json:"high, omitempty"`
+  Low    int `json:"low"`
+  Medium int `json:"medium"`
+  High   int `json:"high"`
 }
 
 type ExposureNotificationResponse struct {
-  Notifications          []Notification       `json:"notifications"`
+  Notifications          []Notification       `json:"notifications,omitempty"`
 }
 
 type Notification struct {
-  ExposureSummaries      []ExposureSummary `json:"exposure_summaries"`
-  DurationSeconds        int     `json:"duration_seconds"`
+  ExposureSummaries      []ExposureSummary `json:"exposure_summaries,omitempty"`
+  DurationSeconds        int     `json:"duration_seconds,omitempty"`
   // Note: we must have dateOfExposure OR dateMostRecentExposure + matchedKeyCount, but NOT both.
-  DateOfExposure         int     `json:"date_of_exposure, omitempty"`
-  DateMostRecentExposure int     `json:"date_most_recent_exposure, omitempty"`
-  MatchedKeyCount        int     `json:"matched_key_count, omitempty"`
+  DateOfExposure         int     `json:"date_of_exposure,omitempty"`
+  DateMostRecentExposure int     `json:"date_most_recent_exposure,omitempty"`
+  MatchedKeyCount        int     `json:"matched_key_count,omitempty"`
 }
