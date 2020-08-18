@@ -1,69 +1,72 @@
 # Scoring Service
 
-## Link to Trello Board
+Scoring is a simple stateless server that takes a Summary of Exposures for a given ENExposureConfiguration and returns an array of Notifications. 
 
-- <https://trello.com/b/dA1ZZcHp/scoring-service>
+# General Flow
 
-## Introduction
+1. App gets EN Exposure Configuration from SERVER (`/v1/configuration`)
+2. App passes configuration to GAEN API
+3. GAEN runs exposure check and returns ExposureSummary
+4. (If matched_key_count: 0, discard, done)
 
-## Project Layout
+5. App constructs modified ExposureSummary object using structure from /v1/score input:
+    1. Adds date_received (read comments in definition below)
+    2. Timezone_offset
+    3. Seq_no_in_day: this is saying it’s the n:th ExposureSummary we received today.
 
-    - Note: this will change over time
-    .
-    ├── go.mod
-    ├── go.sum
-    ├── LICENSE
-    ├── log
-    │   ├── Dockerfile
-    │   └── main.go     <- Entry point for Logger
-    ├── pb
-    │   ├── notification.pb.go
-    │   └── notification.proto
-    ├── protocompile.sh
-    ├── README.md
-    └── server
-        ├── Dockerfile
-        └── main.go     <- Entry point for Notification Server
+6. App sends new ExposureSummary, stored UnusedExposureSummaries to server
+7. Server returns Notification array (might be empty) with any new notifications, contains ExposureSummaries that these notifications were based on
 
-    3 directories, 11 files
+8. App does:
+    1. removes any ExposureSummaries from UnusedExposureSummaries that are present in new notifications
+    2. If no new notification: stores the new ExposureSummary in UnusedExposureSummaries
+    3. Stores new Notifications if exist
+    4. Displays notifications to users based on new Notification object
 
-## TODO
+### State saved in app:
 
-    - Finalize log.proto
+- Map/dictionary of unused exposure summaries (14 days), keyed by “date_received:seq_no_in_day”
+- Notification array (14 days)
+- Sequence # for ExposureSummary in day
 
-        - The following are Lina's feedback and will be incorporated over time:
+## Environment
 
-            - specific structure of requests/responses/logs will change as per docs
-            - log file name: How about opening a new file with the current date/time to ms resolution as part of the file name? That way, we can easily write from more than one instance of the service without worrying about file inconsistencies. With this we’d only open as writeonly, never append.
-            - Open & close new files periodically… no need to open anew every time a new request comes in, but do close and open a new one at least every day or so, so that files will be finalized and done.
-            - log.fatal: I believe this would exit the service? Unless this is a permanent error that it’s impossible to recover from, I suggest trying to recover gracefully and logging an error so that we can detect it, but don’t completely halt the service. In this case, I would say if we can’t open a file on startup of the service, definitely log.fatal. But if we’re having some kind of write error in the middle of operation, and we can still return a response to the client, we want to make sure we find out there’s a problem but we don’t want to kill the service thus rendering the app not able to notify.
+- GAEN v1.0 for now
+- Working with ExposureSummary (Not ExposureInfo to avoid direct OS Notifications to users)
+- Must be deployed in Google/AWS/Azure clouds. 
 
-        - Logs should output to storage bucket (s3, google storage buckets, etc)
+## TODO (Week of Aug 17)
 
-            - Daily batch jobs:
-                
-                - New logfiles will be created on a daily basis with a timer to rotate logs according to date with ms resolution
-                    - will be write only
+- [ ] Scoring API Design (Lina)
+- [ ] Basic Go Implementation (Ray, David)
+- [ ] Deployment on AWS (Ray, David)
+- [ ] cURL calls for the Mobile team and this document down below (Ray)
+- [ ] Update Mobile app to use the basic scoring function (Matt?)
+- [ ] UnitTests with testing data captured by the mobile team (Ray)
 
-        - Use Context / Cancellation for saveToFile()
+## How to Install in Production
 
-        - Update log.fatal() accordingly
-    
-    - Finalize notification.proto
-        
-        - Greenlight for the datastructures (depends on diagram)
+(Ray, David, please update)
 
-    - Add a diagram
-        
-        - Finalize Dataflow
+## How to run in Development
 
-## Notes
+1. Fork the repo to your GitHub user. 
 
-    - Everything is subject to change
-        
-        - proto3 can be refactored to proto2
+2. Clone to your computer.
 
-    - Once the project seed is finished, Dev/Staging/Prod branches will be created
+```bash
+git clone https://github.com/Path-Check/Scoring-Service.git
+```
+
+3. Run
+
+```bash
+??
+```
+
+## Running the Tests
+
+(Ray, David, please update)
 
 ## Important Links and References
 
