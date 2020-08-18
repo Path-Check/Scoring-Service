@@ -1,37 +1,36 @@
 package model
 
 type ExposureNotificationRequest struct {
-	NewExposureSummary     ExposureSummary   `json:"newExposureSummary"`
-	CurrentExposureSummary []ExposureSummary `json:"currentExposureSummary, omitempty"`
+	NewExposureSummary    ExposureSummary   `json:"newExposureSummary"`
+	UnusedExposureSummary []ExposureSummary `json:"unusedExposureSummary"`
 }
 
 type ExposureSummary struct {
-	AttenuationDurations  AttenuationDurations `json:"attenuationDurations, omitempty"`
-	MatchedKeyCount       int                  `json:"matchedKeyCount, omitempty"`
-	DaysSinceLastExposure int                  `json:"daysSinceLastExposure, omitempty"`
-	TimeReceived          int                  `json:"timeReceived"`
+	DateReceived          int                  `json:"dateReceived,omitempty"`
+	TimezoneOffset        int                  `json:"timezoneOffset,omitempty"`
+	SeqNoInDay            int                  `json:"seqNoInDay,omitempty"`
+	AttenuationDurations  AttenuationDurations `json:"attenuationDurations,omitempty"`
+	MatchedKeyCount       int                  `json:"matchedKeyCount,omitempty"`
+	DaysSinceLastExposure int                  `json:"daysSinceLastExposure,omitempty"`
+	MaximumRiskScore      int                  `json:"maximumRiskScore,omitempty"`
+	RiskScoreSum          int                  `json:"riskScoreSum,omitempty"`
 }
 
 type AttenuationDurations struct {
-	LowBucketDurationSeconds    int `json:"lowBucketDurationSeconds, omitempty"`
-	MediumBucketDurationSeconds int `json:"mediumDurationSeconds, omitempty"`
-	HighBucketDurationSeconds   int `json:"highBucketDurationSeconds, omitempty"`
+	Low    int `json:"low,omitempty"`
+	Medium int `json:"medium,omitempty"`
+	High   int `json:"high,omitempty"`
 }
 
 type ExposureNotificationResponse struct {
-	ExposureSummaries []ExposureSummary `json:"exposureSummaries"`
+	Notifications []Notification `json:"notifications"`
 }
 
-// Note: we must have dateOfExposure OR dateMostRecentExposure + matchedKeyCount, but NOT both.
+// Notification Note: we must have dateOfExposure OR dateMostRecentExposure + matchedKeyCount, but NOT both.
 type Notification struct {
-	ExposureSummaryRefs    []ExposureSummaryRef `json:"exposure_summary_refs"`
-	DurationSeconds        int                  `json:"duration_seconds"`
-	DateOfExposure         int                  `json:"date_of_exposure, omitempty"`
-	DateMostRecentExposure int                  `json:"date_most_recent_exposure, omitempty"`
-	MatchedKeyCount        int                  `json:"matched_key_count, omitempty"`
-}
-
-type ExposureSummaryRef struct {
-	DateReceived int `json:"date_received, omitempty"`
-	SeqNoInDay   int `json:"seq_no_in_day, omitempty"`
+	ExposureSummaries      []ExposureSummary `json:"exposureSummaries"`
+	DurationSeconds        int               `json:"durationSeconds"`
+	DateOfExposure         int               `json:"dateOfExposure,omitempty"`
+	DateMostRecentExposure int               `json:"dateMostRecentExposure,omitempty"`
+	MatchedKeyCount        int               `json:"matchedKeyCount,omitempty"`
 }
