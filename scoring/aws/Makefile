@@ -9,11 +9,11 @@ clean:
 
 init.done:
 	terraform init
-	touch $@
+	echo terraform initialized
 
 deploy.done: init.done main.tf scoring.zip
 	terraform apply
-	touch $@
+	echo terraform applied and application deployed
 
 scoring.zip: scoring
 	zip $@ $<
