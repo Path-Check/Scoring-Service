@@ -10,15 +10,18 @@ import (
 
 func TestHandler(t *testing.T) {
 	requestData := []byte(`
-    {"new_exposure_summary":
-      { "date_received": 1597482000,
-        "timezone_offset": 32400,
-        "seq_no_in_day": 1,
-        "attenuation_durations": {"low": 900, "medium": 0, "high": 0},
-        "matched_key_count": 1,
-        "days_since_last_exposure": 1,
-        "maximum_risk_score": 1,
-        "risk_score_sum": 1 }
+	{
+		"new_exposure_summary":
+		{
+			"date_received": 1597482000,
+			"timezone_offset": 32400,
+			"seq_no_in_day": 1,
+			"attenuation_durations": {"low": 900, "medium": 0, "high": 0},
+			"matched_key_count": 1,
+			"days_since_last_exposure": 1,
+			"maximum_risk_score": 1,
+			"risk_score_sum": 1
+		}
 	}`)
 
 	// use RawMessage instead of Marshal to avoid escaping characters
