@@ -1,7 +1,7 @@
 .PHONY: test clean
 
 test: deploy.done
-	# curl -fsSL -D - "$$(terraform output url)?name=Lambda"
+	curl -fsSL -d '{"new_exposure_summary":{"date_received": 1597482000,"timezone_offset": 32400,"seq_no_in_day": 1,"attenuation_durations": {"low": 900, "medium": 0, "high": 0},"matched_key_count": 1,"days_since_last_exposure": 1,"maximum_risk_score": 1,"risk_score_sum": 1}}' -H "Content-Type: application/json" -X POST "$$(terraform output url)"
 
 clean:
 	terraform destroy
