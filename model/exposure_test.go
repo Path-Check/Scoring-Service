@@ -52,9 +52,13 @@ func TestWriteResponse(t *testing.T) {
 				ExposureSummaries: []ExposureSummary{
 					{
 						DateReceived:         1597654800,
+						TimezoneOffset:       0,
 						SeqNoInDay:           2,
 						AttenuationDurations: AttenuationDurations{Low: 1800, Medium: 0, High: 0},
 						MatchedKeyCount:      1,
+						DaysSinceLastExposure: 0,
+						MaximumRiskScore:     1,
+						RiskScoreSum:         1,
 					},
 				},
 				DurationSeconds: 1800,
@@ -67,7 +71,8 @@ func TestWriteResponse(t *testing.T) {
 		log.Println(error)
 	}
 
-	expected := `{"notifications":[{"exposure_summaries":[{"date_received":1597654800,"seq_no_in_day":2,"attenuation_durations":{"low":1800,"medium":0,"high":0},"matched_key_count":1}],"duration_seconds":1800,"date_of_exposure":1597482000}]}`
+	expected :=
+`{"notifications":[{"exposure_summaries":[{"date_received":1597654800,"timezone_offset":0,"seq_no_in_day":2,"attenuation_durations":{"low":1800,"medium":0,"high":0},"matched_key_count":1,"days_since_last_exposure":0,"maximum_risk_score":1,"risk_score_sum":1}],"duration_seconds":1800,"date_of_exposure":1597482000}]}`
 
 	assert.Equal(t, expected, string(response))
 }
