@@ -1,6 +1,6 @@
 # Scoring Service
 
-Scoring is a simple stateless server that takes a Summary of Exposures for a given ENExposureConfiguration and returns an array of Notifications. 
+Scoring is a simple stateless server that takes a Summary of Exposures for a given ENExposureConfiguration and returns an array of Notifications.
 
 # General Flow
 
@@ -33,12 +33,12 @@ Scoring is a simple stateless server that takes a Summary of Exposures for a giv
 
 - GAEN v1.0 for now
 - Working with ExposureSummary (Not ExposureInfo to avoid direct OS Notifications to users)
-- Must be deployed in Google/AWS/Azure clouds. 
+- Must be deployed in Google/AWS/Azure clouds.
 
 ## TODO (Week of Aug 17)
 
-- [ ] Scoring API Design (Lina)
-- [ ] Basic Go Implementation (Ray, David)
+- [x] Scoring API Design (Lina)
+- [x] Basic Go Implementation (Ray, David)
 - [ ] Deployment on AWS (Ray, David)
 - [ ] cURL calls for the Mobile team and this document down below (Ray)
 - [ ] Update Mobile app to use the basic scoring function (Matt?)
@@ -50,7 +50,7 @@ Scoring is a simple stateless server that takes a Summary of Exposures for a giv
 
 ## How to run in Development
 
-1. Fork the repo to your GitHub user. 
+1. Fork the repo to your GitHub user.
 
 2. Clone to your computer.
 
