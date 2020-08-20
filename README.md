@@ -1,6 +1,6 @@
 # Scoring Service
 
-Scoring is a simple stateless server that takes a Summary of Exposures for a given ENExposureConfiguration and returns an array of Notifications.
+Tells mobile app whether or not to notify everyone, whom an infected user has met the last 14 days, if user is infected. It takes a Summary of Exposures for a given `exposureconfiguration.json` (which changes based on health authority) and returns array of Notifications if certain scoring criteria are met.
 
 # General Flow
 
@@ -14,8 +14,8 @@ Scoring is a simple stateless server that takes a Summary of Exposures for a giv
     2. Timezone_offset
     3. Seq_no_in_day: this is saying it’s the n:th ExposureSummary we received today.
 
-6. App sends new ExposureSummary, stored UnusedExposureSummaries to server
-7. Server returns Notification array (might be empty) with any new notifications, contains ExposureSummaries that these notifications were based on
+6. App sends new ExposureSummary, stores UnusedExposureSummaries to server
+7. Server returns Notification array (might be empty) with any new notifications, contains ExposureSummaries on which these notifications were based
 
 8. App does:
     1. removes any ExposureSummaries from UnusedExposureSummaries that are present in new notifications
@@ -38,20 +38,20 @@ Scoring is a simple stateless server that takes a Summary of Exposures for a giv
 ## TODO (Week of Aug 17)
 
 - [x] Scoring API Design (Lina)
-  - [ ] Add scoring API design for ExposureWindows to doc (Lina)
-- [x] Basic Go Implementation (Ray, David)
+  - [ ] Add scoring API design for ExposureWindows (Apple version 2) to doc (Lina)
+- [x] Basic Go Implementation (Raymond, David)
 - [ ] Scoring Go Implementation (Lina)
   - [ ] Finish v1 scoring (Lina)
-  - [ ] Make it use config instead of current hardcoded values (Lina? Ray?
+  - [ ] Make it use config instead of current hardcoded values (Lina? Raymond?
 Dave?)
-- [X] Deployment on AWS (Ray, David)
-- [X] cURL calls for the Mobile team and this document down below (Ray)
-- [ ] Update Mobile app to use the basic scoring function (Matt?) 
-- [X] UnitTests with testing data captured by the mobile team (Ray)
+- [X] Deployment on AWS (Raymond, David)
+- [X] cURL calls for the Mobile team and this document down below (Raymond)
+- [ ] Update Mobile app to use the basic scoring function (Matt?)
+- [X] UnitTests with testing data captured by the mobile team (Raymond)
 
 # How to Install in Production
 
-(Ray, David, please update)
+(Raymond, David, please update)
 
 
 ### Installation and Setup
@@ -69,7 +69,7 @@ Dave?)
     - Install Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
         - This is necessary to provision the necessary infrastructure required to deploy the lambda function
 
-### Run Makefile
+### Run Makefile (with AWS CLI and Terraform installed)
 
     - cd into the target directory (ex: cd scoring/aws)
     - run 'make'
@@ -81,21 +81,26 @@ Dave?)
 
 2. Clone to your computer.
 
-```bash
+```
 git clone https://github.com/Path-Check/Scoring-Service.git
 ```
 
-3. Run
+3. Run (with AWS CLI and Terraform installed)
 
-```bash
+```
 make
 ```
 
 ## Running the Tests
 
-(Ray, Dave, please update)
+```
+go test ./...
+go test -v ./model (all tests in /model)
+go test -v ./scoring/aws (all tests in /scoring/aws)
+```
 
-```bash
+With AWS CLI and Terraform installed:
+```
 make test
 ```
 
