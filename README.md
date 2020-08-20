@@ -103,6 +103,13 @@ With AWS CLI and Terraform installed:
 ```
 make test
 ```
+## [AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) Function
+- [See AWS lambda function dashboard](https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/scoring?tab=monitoring)
+- To manually test lambda function with an input, click **Test** in upper right corner. You may use "ScoreTest" or configure your own test event.
+
+## [AWS CloudWatch logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html)
+- [See CloudWatch logs](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fscoring) for our scoring lambda function. Click on or search "log streams."
+- [Run queries on logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_RunSampleQuery.html).
 
 ## Important Links and References
 
