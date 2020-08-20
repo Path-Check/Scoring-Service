@@ -57,8 +57,9 @@ Dave?)
 ### Installation and Setup
 
     - Install Golang: https://golang.org/
-        - This is 
+        - This is necessary to compile and test the go application
     - Install AWS CLI:https://aws.amazon.com/cli/
+        - This is necessary to deploy resources to AWS
     - Log Into AWS CLI and configure credentials: https://learn.hashicorp.com/tutorials/terraform/aws-build?in=terraform/aws-get-started
         - run 'aws configure' and input your account credentials
         - Configure your AWS access key and secret key with the aws configure command, or just create a file ~/.aws/credentials containing the keys:
@@ -66,6 +67,7 @@ Dave?)
             aws_access_key_id = KEY
             aws_secret_access_key = KEY
     - Install Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
+        - This is necessary to provision the necessary infrastructure required to deploy the lambda function
 
 ### Run Makefile
 
