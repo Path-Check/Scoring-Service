@@ -70,6 +70,7 @@ resource "aws_api_gateway_resource" "scoring" {
 
 resource "aws_api_gateway_rest_api" "scoring" {
   name = "scoring"
+  description = "API Gateway for the Pathcheck Scoring Service"
 }
 
 #           GET
