@@ -40,14 +40,14 @@ Scoring is a simple stateless server that takes a Summary of Exposures for a giv
 - [x] Scoring API Design (Lina)
 ---  [ ] Add scoring API design for ExposureWindows to doc (Lina)
 - [x] Basic Go Implementation (Ray, Dave)
-- [~] Scoring Go Implementation (Lina)
+- [X] Scoring Go Implementation (Lina)
 --- [ ] Finish v1 scoring (Lina)
 --- [ ] Make it use config instead of current hardcoded values (Lina? Ray?
 Dave?)
-- [~] Deployment on AWS (Ray, David)
-- [~] cURL calls for the Mobile team and this document down below (Ray)
+- [X] Deployment on AWS (Ray, David)
+- [X] cURL calls for the Mobile team and this document down below (Ray)
 - [ ] Update Mobile app to use the basic scoring function (Matt?) 
-- [~] UnitTests with testing data captured by the mobile team (Ray)
+- [X] UnitTests with testing data captured by the mobile team (Ray)
 
 ## How to Install in Production
 
