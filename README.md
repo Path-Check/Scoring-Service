@@ -59,6 +59,9 @@ Dave?)
     - Install Golang: https://golang.org/
     - Install AWS CLI:https://aws.amazon.com/cli/
     - Log Into AWS CLI and configure credentials: https://learn.hashicorp.com/tutorials/terraform/aws-build?in=terraform/aws-get-started
+    ```bash
+    aws configure
+    ```
     - Install Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
 
 ### Run Makefile
