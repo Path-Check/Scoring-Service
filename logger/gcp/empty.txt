@@ -1,1 +1,0 @@
-This will have Docker container code, when we need to deploy this on GCP.

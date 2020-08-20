@@ -22,8 +22,9 @@ resource "aws_lambda_function" "scoring" {
   function_name    = "scoring"
   filename         = "scoring.zip"
   handler          = "scoring"
-  source_code_hash = "${base64sha256(filebase64("scoring.zip"))}"
-  role             = "${aws_iam_role.scoring.arn}"
+  description      = "Lambda Function for the Scoring Service"
+  source_code_hash = base64sha256(filebase64("scoring.zip"))
+  role             = aws_iam_role.scoring.arn
   runtime          = "go1.x"
   memory_size      = 128
   timeout          = 1
@@ -56,27 +57,28 @@ POLICY
 resource "aws_lambda_permission" "scoring" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.scoring.arn}"
+  function_name = aws_lambda_function.scoring.arn
   principal     = "apigateway.amazonaws.com"
 }
 
 # A Lambda function is not a usual public REST API. We need to use AWS API
 # Gateway to map a Lambda function to an HTTP endpoint.
 resource "aws_api_gateway_resource" "scoring" {
-  rest_api_id = "${aws_api_gateway_rest_api.scoring.id}"
-  parent_id   = "${aws_api_gateway_rest_api.scoring.root_resource_id}"
+  rest_api_id = aws_api_gateway_rest_api.scoring.id
+  parent_id   = aws_api_gateway_rest_api.scoring.root_resource_id
   path_part   = "scoring"
 }
 
 resource "aws_api_gateway_rest_api" "scoring" {
   name = "scoring"
+  description = "API Gateway for the Pathcheck Scoring Service"
 }
 
 #           GET
 # Internet -----> API Gateway
 resource "aws_api_gateway_method" "scoring" {
-  rest_api_id   = "${aws_api_gateway_rest_api.scoring.id}"
-  resource_id   = "${aws_api_gateway_resource.scoring.id}"
+  rest_api_id   = aws_api_gateway_rest_api.scoring.id
+  resource_id   = aws_api_gateway_resource.scoring.id
   http_method   = "POST"
   authorization = "NONE"
 }
@@ -87,9 +89,9 @@ resource "aws_api_gateway_method" "scoring" {
 #
 # The date 2015-03-31 in the URI is just the version of AWS Lambda.
 resource "aws_api_gateway_integration" "scoring" {
-  rest_api_id             = "${aws_api_gateway_rest_api.scoring.id}"
-  resource_id             = "${aws_api_gateway_resource.scoring.id}"
-  http_method             = "${aws_api_gateway_method.scoring.http_method}"
+  rest_api_id             = aws_api_gateway_rest_api.scoring.id
+  resource_id             = aws_api_gateway_resource.scoring.id
+  http_method             = aws_api_gateway_method.scoring.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.scoring.arn}/invocations"
@@ -97,10 +99,8 @@ resource "aws_api_gateway_integration" "scoring" {
 
 # This resource defines the URL of the API Gateway.
 resource "aws_api_gateway_deployment" "scoring_v1" {
-  depends_on = [
-    "aws_api_gateway_integration.scoring"
-  ]
-  rest_api_id = "${aws_api_gateway_rest_api.scoring.id}"
+  depends_on = [aws_api_gateway_integration.scoring]
+  rest_api_id = aws_api_gateway_rest_api.scoring.id
   stage_name  = "v1"
 }
 
