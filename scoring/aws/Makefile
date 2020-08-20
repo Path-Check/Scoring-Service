@@ -5,7 +5,7 @@ test: deploy.done
 
 clean:
 	terraform destroy
-	rm -f init.done deploy.done scoring.zip scoring
+	rm -f scoring.zip scoring
 
 init.done:
 	terraform init

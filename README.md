@@ -38,20 +38,43 @@ Scoring is a simple stateless server that takes a Summary of Exposures for a giv
 ## TODO (Week of Aug 17)
 
 - [x] Scoring API Design (Lina)
+<<<<<<< HEAD
   - [ ] Add scoring API design for ExposureWindows to doc (Lina)
 - [x] Basic Go Implementation (Ray, David)
 - [ ] Scoring Go Implementation (Lina)
   - [ ] Finish v1 scoring (Lina)
   - [ ] Make it use config instead of current hardcoded values (Lina? Ray?
+=======
+---  [ ] Add scoring API design for ExposureWindows to doc (Lina)
+- [x] Basic Go Implementation (Ray, Dave)
+- [X] Scoring Go Implementation (Lina)
+--- [ ] Finish v1 scoring (Lina)
+--- [ ] Make it use config instead of current hardcoded values (Lina? Ray?
+>>>>>>> a31a4a88f1a1abf4954de09c595c5689158d443d
 Dave?)
-- [ ] Deployment on AWS (Ray, David)
-- [ ] cURL calls for the Mobile team and this document down below (Ray)
+- [X] Deployment on AWS (Ray, David)
+- [X] cURL calls for the Mobile team and this document down below (Ray)
 - [ ] Update Mobile app to use the basic scoring function (Matt?) 
-- [ ] UnitTests with testing data captured by the mobile team (Ray)
+- [X] UnitTests with testing data captured by the mobile team (Ray)
 
 ## How to Install in Production
 
 (Ray, David, please update)
+
+
+### Installation and Setup
+
+    - Install Golang: https://golang.org/
+    - Install AWS CLI:https://aws.amazon.com/cli/
+    - Log Into AWS CLI and configure credentials: https://learn.hashicorp.com/tutorials/terraform/aws-build?in=terraform/aws-get-started
+        - run 'aws configure' and input your account credentials
+    - Install Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
+
+### Run Makefile
+
+    - cd into the target directory (ex: cd scoring/aws)
+    - run make
+
 
 ## How to run in Development
 
@@ -66,12 +89,16 @@ git clone https://github.com/Path-Check/Scoring-Service.git
 3. Run
 
 ```bash
-??
+make
 ```
 
 ## Running the Tests
 
-(Ray, David, please update)
+(Ray, Dave, please update)
+
+```bash
+make test
+```
 
 ## Important Links and References
 
