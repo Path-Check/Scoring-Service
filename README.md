@@ -49,7 +49,7 @@ Dave?)
 - [ ] Update Mobile app to use the basic scoring function (Matt?) 
 - [X] UnitTests with testing data captured by the mobile team (Ray)
 
-## How to Install in Production
+# How to Install in Production
 
 (Ray, David, please update)
 
@@ -57,15 +57,20 @@ Dave?)
 ### Installation and Setup
 
     - Install Golang: https://golang.org/
+        - This is 
     - Install AWS CLI:https://aws.amazon.com/cli/
     - Log Into AWS CLI and configure credentials: https://learn.hashicorp.com/tutorials/terraform/aws-build?in=terraform/aws-get-started
         - run 'aws configure' and input your account credentials
+        - Configure your AWS access key and secret key with the aws configure command, or just create a file ~/.aws/credentials containing the keys:
+            [default]
+            aws_access_key_id = KEY
+            aws_secret_access_key = KEY
     - Install Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
 
 ### Run Makefile
 
     - cd into the target directory (ex: cd scoring/aws)
-    - run make
+    - run 'make'
 
 
 ## How to run in Development
