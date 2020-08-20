@@ -115,7 +115,20 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
 
     empty_response := &ExposureNotificationResponse{}
     return empty_response, nil
+  } else if (request.NewExposureSummary.MatchedKeyCount == 2 ||
+	request.NewExposureSummary.MatchedKeyCount == 3) {
+	// TODO: use config here.
+	// But also note, as written this does tie us into 15 minutes of
+	// exposure to some extent, since the choice here has been made based on
+	// the cap on buckets.
+	if (weightedDuration / request.NewExposureSummary.MatchedKeyCount >= 15 * 60) {
+		// The average duration was over the threshold, so we know there
+		// was at least one day that was over the threshold.
+		return CreateNotification(&request.NewExposureSummary), nil
+	}
   }
+
+  // TODO: Add case for when MatchedKeyCount is 4+.
 
   response_data := &ExposureNotificationResponse{
     Notifications: []Notification{
