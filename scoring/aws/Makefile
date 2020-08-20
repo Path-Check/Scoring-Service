@@ -10,7 +10,7 @@ test: deploy.done
 clean:
 	terraform destroy
 	rm -f scoring.zip scoring
-	@echo "Scoring infrastructure destroyed, zip file removed, and scoring binary removed"
+	@echo "Scoring infrastructure destroyed, zip file removed, and scoring binary removed!"
 
 # init.done initializes terraform 
 init.done:
