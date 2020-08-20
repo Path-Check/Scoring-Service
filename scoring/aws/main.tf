@@ -22,6 +22,7 @@ resource "aws_lambda_function" "scoring" {
   function_name    = "scoring"
   filename         = "scoring.zip"
   handler          = "scoring"
+  description      = "Lambda Function for the Scoring Service"
   source_code_hash = base64sha256(filebase64("scoring.zip"))
   role             = aws_iam_role.scoring.arn
   runtime          = "go1.x"
