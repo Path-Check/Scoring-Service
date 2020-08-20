@@ -10,25 +10,25 @@ test: deploy.done
 clean:
 	terraform destroy
 	rm -f scoring.zip scoring
-	@echo "Scoring infrastructure destroyed, zip file removed, and scoring binary removed!"
+	@echo "\nScoring infrastructure destroyed, zip file removed, and scoring binary removed!\n"
 
 # init.done initializes terraform 
 init.done:
 	terraform init
-	@echo "Terraform initialized!"
+	@echo "\nTerraform initialized!\n"
 
 # deploy.done calls init.done and passes in main.tf builds scoring.zip
 deploy.done: init.done main.tf scoring.zip
 	terraform apply
-	@echo "Terraform applied and application deployed!"
+	@echo "\nTerraform applied and application deployed!\n"
 
 # scoring.zip zips the compiled build into a zip file
 scoring.zip: scoring
 	zip $@ $<
-	@echo "Scoring binary zipped!"
+	@echo "\nScoring binary zipped!\n"
 
 # scoring compiles and builds a binary according to linux amd64
 scoring: main.go
 	go get .
 	GOOS=linux GOARCH=amd64 go build -o $@
-	@echo "Scoring binary compiled!"
+	@echo "\nScoring binary compiled!\n"
