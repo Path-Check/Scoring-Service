@@ -124,3 +124,9 @@ make test
 - <https://www.reuters.com/article/us-health-coronavirus-britain-tracing-ap/britains-covid-19-app-the-game-changer-that-wasnt-idUSKBN2400YM>
 - <https://github.com/google/exposure-notifications-server/tree/main/examples/export>
 - <https://github.com/google/exposure-notifications-server/blob/main/examples/export/testExport-2-records-1-of-1.zip>
+
+## Design Documents
+
+- [Data Format For Data Scoring and Metrics](https://docs.google.com/document/d/18UM5T_8PSZ4mJaRpz0H3UDnwyyta2o_GmxtyI396xYs/edit#heading=h.88dqztbzgbbp)
+- [Study Design and Methods](https://docs.google.com/document/d/1FT4J29c2_k5gBdCf04BN7X9HbLCrN1eNmOu0ehgHZjY/edit)
+- [GAEN Scoring Design](https://docs.google.com/document/d/12vU48fwOcGvIYLR7Y0jnSK_ZIeGvwvvszs6EjG_HHNE/edit#heading=h.bg7iuv59zi1d)
