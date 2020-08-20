@@ -39,7 +39,7 @@ Scoring is a simple stateless server that takes a Summary of Exposures for a giv
 
 - [x] Scoring API Design (Lina)
 ---  [ ] Add scoring API design for ExposureWindows to doc (Lina)
-- [x] Basic Go Implementation (Ray, David)
+- [x] Basic Go Implementation (Ray, Dave)
 - [ ] Scoring Go Implementation (Lina)
 --- [ ] Finish v1 scoring (Lina)
 --- [ ] Make it use config instead of current hardcoded values (Lina? Ray?
@@ -66,12 +66,16 @@ git clone https://github.com/Path-Check/Scoring-Service.git
 3. Run
 
 ```bash
-??
+make
 ```
 
 ## Running the Tests
 
-(Ray, David, please update)
+(Ray, Dave, please update)
+
+```bash
+make test
+```
 
 ## Important Links and References
 
