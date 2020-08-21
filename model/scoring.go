@@ -2,8 +2,7 @@ package model
 // TODO: This should perhaps be in a different package. But hacky-Lina doesn't
 // know how to write Go so she's just gonna do this as quickly as she can.
 
-
-import "fmt"
+import "errors"
 
 func WeightedDuration(exposureSummary *ExposureSummary) (int) {
   // TODO: use values from config
@@ -83,8 +82,8 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
   empty_response := &ExposureNotificationResponse{}
 
   if (request.NewExposureSummary.MatchedKeyCount == 0) {
-    fmt.Println("Matched key count was 0, this shouldn't have been sent.");
-    return empty_response, nil
+    return empty_response, errors.New(
+      "Matched key count was 0, this shouldn't have been sent.")
   }
 
   weightedDuration := WeightedDuration(&request.NewExposureSummary);
