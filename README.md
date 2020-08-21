@@ -94,7 +94,7 @@ make
 ## Running the Tests
 
 ```
-go test ./...
+go test -v ./... (all tests, period)
 go test -v ./model (all tests in /model)
 go test -v ./scoring/aws (all tests in /scoring/aws)
 ```
