@@ -1,4 +1,3 @@
-# Makefiles, putting CI/CD businesses out of business since 1976 lmao
 # .PHONY calls the test and clean functions
 .PHONY: test clean
 
