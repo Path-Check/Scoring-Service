@@ -2,8 +2,7 @@ package model
 // TODO: This should perhaps be in a different package. But hacky-Lina doesn't
 // know how to write Go so she's just gonna do this as quickly as she can.
 
-
-import "fmt"
+import "errors"
 
 func WeightedDuration(exposureSummary *ExposureSummary) (int) {
   // TODO: use values from config
@@ -79,14 +78,12 @@ func FilterExposuresByDate(exposureSummaries *[]ExposureSummary, date int) (*[]E
   return &filteredExposures
 }
 
-// TODO: Add cases for when the new ExposureSummary has matchedKeyCount > 1.
 func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationResponse, error) {
+  empty_response := &ExposureNotificationResponse{}
+
   if (request.NewExposureSummary.MatchedKeyCount == 0) {
-    fmt.Println("Matched key count was 0, this shouldn't have been sent.");
-    response_data := &ExposureNotificationResponse{
-      Notifications: []Notification{},
-    }
-    return response_data, nil
+    return empty_response, errors.New(
+      "Matched key count was 0, this shouldn't have been sent.")
   }
 
   weightedDuration := WeightedDuration(&request.NewExposureSummary);
@@ -113,7 +110,6 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
       return CreateNotificationAggregated(&request.NewExposureSummary, unusedExposuresSameDay, weightedDuration), nil
     }
 
-    empty_response := &ExposureNotificationResponse{}
     return empty_response, nil
   } else if (request.NewExposureSummary.MatchedKeyCount == 2 ||
 	request.NewExposureSummary.MatchedKeyCount == 3) {
@@ -130,23 +126,5 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
 
   // TODO: Add case for when MatchedKeyCount is 4+.
 
-  response_data := &ExposureNotificationResponse{
-    Notifications: []Notification{
-      {ExposureSummaries: []ExposureSummary{
-         {DateReceived: 1597654800,
-          SeqNoInDay: 1},
-         {DateReceived: 1597654800,
-          SeqNoInDay: 2}},
-       DurationSeconds: 1800,
-       DateOfExposure: 1597482000},
-      {ExposureSummaries: []ExposureSummary{
-         {DateReceived: 1597568400,
-          SeqNoInDay: 1}},
-       DurationSeconds: 900,
-       DateMostRecentExposure: 1597482000,
-       MatchedKeyCount: 3},
-    },
-  }
-
-  return response_data, nil
+  return empty_response, nil
 }

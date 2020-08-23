@@ -94,7 +94,7 @@ make
 ## Running the Tests
 
 ```
-go test ./...
+go test -v ./... (all tests, period)
 go test -v ./model (all tests in /model)
 go test -v ./scoring/aws (all tests in /scoring/aws)
 ```
@@ -103,6 +103,13 @@ With AWS CLI and Terraform installed:
 ```
 make test
 ```
+## [AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) Function
+- [See AWS lambda function dashboard](https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/scoring?tab=monitoring)
+- To manually test lambda function with an input, click **Test** in upper right corner. You may use "ScoreTest" or configure your own test event.
+
+## [AWS CloudWatch logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html)
+- [See CloudWatch logs](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fscoring) for our scoring lambda function. Click on or search "log streams."
+- [Run queries on logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_RunSampleQuery.html).
 
 ## Important Links and References
 
@@ -117,3 +124,9 @@ make test
 - <https://www.reuters.com/article/us-health-coronavirus-britain-tracing-ap/britains-covid-19-app-the-game-changer-that-wasnt-idUSKBN2400YM>
 - <https://github.com/google/exposure-notifications-server/tree/main/examples/export>
 - <https://github.com/google/exposure-notifications-server/blob/main/examples/export/testExport-2-records-1-of-1.zip>
+
+## Design Documents
+
+- [Data Format For Data Scoring and Metrics](https://docs.google.com/document/d/18UM5T_8PSZ4mJaRpz0H3UDnwyyta2o_GmxtyI396xYs/edit#heading=h.88dqztbzgbbp)
+- [Study Design and Methods](https://docs.google.com/document/d/1FT4J29c2_k5gBdCf04BN7X9HbLCrN1eNmOu0ehgHZjY/edit)
+- [GAEN Scoring Design](https://docs.google.com/document/d/12vU48fwOcGvIYLR7Y0jnSK_ZIeGvwvvszs6EjG_HHNE/edit#heading=h.bg7iuv59zi1d)
