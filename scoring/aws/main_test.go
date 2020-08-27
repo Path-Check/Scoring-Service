@@ -11,16 +11,16 @@ import (
 func TestHandler(t *testing.T) {
 	requestData := []byte(`
 	{
-		"new_exposure_summary":
+		"newExposureSummary":
 		{
-			"date_received": 1597482000,
-			"timezone_offset": 32400,
-			"seq_no_in_day": 1,
-			"attenuation_durations": {"low": 900, "medium": 0, "high": 0},
-			"matched_key_count": 1,
-			"days_since_last_exposure": 1,
-			"maximum_risk_score": 1,
-			"risk_score_sum": 1
+			"dateReceived": 1597482000,
+			"timezoneOffset": 32400,
+			"seqNoInDay": 1,
+			"attenuationDurations": {"low": 900, "medium": 0, "high": 0},
+			"matchedKeyCount": 1,
+			"daysSinceLastExposure": 1,
+			"maximumRiskScore": 1,
+			"riskScoreSum": 1
 		}
 	}`)
 
@@ -31,8 +31,8 @@ func TestHandler(t *testing.T) {
 	rawData := string(rawJSON)
 
 	apigRequest := events.APIGatewayProxyRequest{
-		HTTPMethod: "POST",
-		Path:       "/scoring",
+		HTTPMethod: "PUT",
+		Path:       "/v1/score",
 		Body:       rawData,
 		Headers: map[string]string{
 			"Content-Type": "application/json",
@@ -54,7 +54,7 @@ func TestHandler(t *testing.T) {
 			// Test scoring lambda function responds right
 			// when exposure summary data put in API Gateway request
 			request: apigRequest,
-			expect:  "{\"notifications\":[{\"exposure_summaries\":[{\"date_received\":1597482000,\"timezone_offset\":32400,\"seq_no_in_day\":1,\"attenuation_durations\":{\"low\":900,\"medium\":0,\"high\":0},\"matched_key_count\":1,\"days_since_last_exposure\":1,\"maximum_risk_score\":1,\"risk_score_sum\":1}],\"duration_seconds\":900,\"date_of_exposure\":1597395600}]}",
+			expect:  "{\"notifications\":[{\"exposureSummaries\":[{\"dateReceived\":1597482000,\"timezoneOffset\":32400,\"seqNoInDay\":1,\"attenuationDurations\":{\"low\":900,\"medium\":0,\"high\":0},\"matchedKeyCount\":1,\"daysSinceLastExposure\":1,\"maximumRiskScore\":1,\"riskScoreSum\":1}],\"durationSeconds\":900,\"dateOfExposure\":1597395600}]}",
 			err:     nil,
 		},
 		{

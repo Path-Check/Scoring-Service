@@ -3,7 +3,7 @@
 
 # test calls deploy.done then issues a curl request to the deployed lambda function and API Gateway
 test: deploy.done
-	curl -fsSL -d '{"new_exposure_summary":{"date_received": 1597482000,"timezone_offset": 32400,"seq_no_in_day": 1,"attenuation_durations": {"low": 900, "medium": 0, "high": 0},"matched_key_count": 1,"days_since_last_exposure": 1,"maximum_risk_score": 1,"risk_score_sum": 1}}' -H "Content-Type: application/json" -X POST "$$(terraform output url)"
+	curl -fsSL -d '{"newExposureSummary":{"dateReceived": 1597482000,"timezoneOffset": 32400,"seqNoInDay": 1,"attenuationDurations": {"low": 900, "medium": 0, "high": 0},"matchedKeyCount": 1,"daysSinceLastExposure": 1,"maximumRiskScore": 1,"riskScoreSum": 1}}' -H "Content-Type: application/json" -X POST "$$(terraform output url)"
 
 # clean destroys the infrastructure and removes the builds
 clean:
@@ -11,7 +11,7 @@ clean:
 	rm -f logging.zip logging
 	@echo "\nLogging infrastructure destroyed, zip file removed, and logging binary removed!\n"
 
-# init.done initializes terraform 
+# init.done initializes terraform
 init.done:
 	terraform init
 	@echo "\nTerraform initialized!\n"

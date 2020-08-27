@@ -11,16 +11,27 @@ import (
 func TestOneExposure(t *testing.T) {
 	requestData := []byte(`
         {
-            "new_exposure_summary":
+            "newExposureSummary":
             {
-                "date_received": 1597482000,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 900, "medium": 0, "high": 0},
-                "matched_key_count": 1,
-                "days_since_last_exposure": 1,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597482000,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 900, "medium": 0, "high": 0},
+                "matchedKeyCount": 1,
+                "daysSinceLastExposure": 1,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
+            },
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
             }
         }`)
 
@@ -37,7 +48,7 @@ func TestOneExposure(t *testing.T) {
 		log.Println(error)
 	}
 
-	expected := `{"notifications":[{"exposure_summaries":[{"date_received":1597482000,"timezone_offset":32400,"seq_no_in_day":1,"attenuation_durations":{"low":900,"medium":0,"high":0},"matched_key_count":1,"days_since_last_exposure":1,"maximum_risk_score":1,"risk_score_sum":1}],"duration_seconds":900,"date_of_exposure":1597395600}]}`
+	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":900,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":900,"dateOfExposure":1597395600}]}`
 
 	assert.Equal(t, expected, string(response))
 }
@@ -45,16 +56,16 @@ func TestOneExposure(t *testing.T) {
 func TestInsufficientExposure(t *testing.T) {
 	requestData := []byte(`
         {
-            "new_exposure_summary":
+            "newExposureSummary":
             {
-                "date_received": 1597482000,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 90, "medium": 0, "high": 0},
-                "matched_key_count": 1,
-                "days_since_last_exposure": 1,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597482000,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 90, "medium": 0, "high": 0},
+                "matchedKeyCount": 1,
+                "daysSinceLastExposure": 1,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
             }
         }`)
 
@@ -81,27 +92,27 @@ func TestAggregatedExposuresDeterministicDay(t *testing.T) {
 	// for a notification. But in aggregation with an older summary, there is.
 	requestData := []byte(`
         {
-            "new_exposure_summary":
+            "newExposureSummary":
             {
-                "date_received": 1597482000,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 400, "medium": 0, "high": 0},
-                "matched_key_count": 1,
-                "days_since_last_exposure": 1,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597482000,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 400, "medium": 0, "high": 0},
+                "matchedKeyCount": 1,
+                "daysSinceLastExposure": 1,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
             },
-            "unused_exposure_summaries":
+            "unusedExposureSummaries":
             [{
-                "date_received": 1597395600,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 600, "medium": 0, "high": 0},
-                "matched_key_count": 1,
-                "days_since_last_exposure": 0,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597395600,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 600, "medium": 0, "high": 0},
+                "matchedKeyCount": 1,
+                "daysSinceLastExposure": 0,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
             }]
         }`)
 
@@ -117,7 +128,7 @@ func TestAggregatedExposuresDeterministicDay(t *testing.T) {
 		log.Println(error)
 	}
 
-	expected := `{"notifications":[{"exposure_summaries":[{"date_received":1597482000,"timezone_offset":32400,"seq_no_in_day":1,"attenuation_durations":{"low":400,"medium":0,"high":0},"matched_key_count":1,"days_since_last_exposure":1,"maximum_risk_score":1,"risk_score_sum":1},{"date_received":1597395600,"timezone_offset":32400,"seq_no_in_day":1,"attenuation_durations":{"low":600,"medium":0,"high":0},"matched_key_count":1,"days_since_last_exposure":0,"maximum_risk_score":1,"risk_score_sum":1}],"duration_seconds":1000,"date_of_exposure":1597395600}]}`
+	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":400,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1},{"dateReceived":1597395600,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":600,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":0,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":1000,"dateOfExposure":1597395600}]}`
 
 	assert.Equal(t, expected, string(response))
 }
@@ -128,27 +139,27 @@ func TestAggregatedExposuresDeterministicDayDifferentDays(t *testing.T) {
 	// so they should not be aggregated, and there will be no notification.
 	requestData := []byte(`
         {
-            "new_exposure_summary":
+            "newExposureSummary":
             {
-                "date_received": 1597482000,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 400, "medium": 0, "high": 0},
-                "matched_key_count": 1,
-                "days_since_last_exposure": 1,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597482000,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 400, "medium": 0, "high": 0},
+                "matchedKeyCount": 1,
+                "daysSinceLastExposure": 1,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
             },
-            "unused_exposure_summaries":
+            "unusedExposureSummaries":
             [{
-                "date_received": 1597395600,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 600, "medium": 0, "high": 0},
-                "matched_key_count": 1,
-                "days_since_last_exposure": 3,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597395600,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 600, "medium": 0, "high": 0},
+                "matchedKeyCount": 1,
+                "daysSinceLastExposure": 3,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
             }]
         }`)
 
@@ -175,27 +186,27 @@ func TestAggregatedExposuresNonDeterministicDay(t *testing.T) {
 	// much exposure there were per day.
 	requestData := []byte(`
         {
-            "new_exposure_summary":
+            "newExposureSummary":
             {
-                "date_received": 1597482000,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 400, "medium": 0, "high": 0},
-                "matched_key_count": 1,
-                "days_since_last_exposure": 1,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597482000,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 400, "medium": 0, "high": 0},
+                "matchedKeyCount": 1,
+                "daysSinceLastExposure": 1,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
             },
-            "unused_exposure_summaries":
+            "unusedExposureSummaries":
             [{
-                "date_received": 1597395600,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 600, "medium": 0, "high": 0},
-                "matched_key_count": 2,
-                "days_since_last_exposure": 0,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597395600,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 600, "medium": 0, "high": 0},
+                "matchedKeyCount": 2,
+                "daysSinceLastExposure": 0,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
             }]
         }`)
 
@@ -221,16 +232,16 @@ func TestNonDeterministicDayAvgAboveThreshold(t *testing.T) {
 	// that at least one exposure was above 15 minutes long.
 	requestData := []byte(`
         {
-            "new_exposure_summary":
+            "newExposureSummary":
             {
-                "date_received": 1597482000,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 1900, "medium": 0, "high": 0},
-                "matched_key_count": 2,
-                "days_since_last_exposure": 1,
-                "maximum_risk_score": 1,
-                "risk_score_sum": 1
+                "dateReceived": 1597482000,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 1900, "medium": 0, "high": 0},
+                "matchedKeyCount": 2,
+                "daysSinceLastExposure": 1,
+                "maximumRiskScore": 1,
+                "riskScoreSum": 1
             }
         }`)
 
@@ -246,7 +257,7 @@ func TestNonDeterministicDayAvgAboveThreshold(t *testing.T) {
 		log.Println(error)
 	}
 
-	expected := `{"notifications":[{"exposure_summaries":[{"date_received":1597482000,"timezone_offset":32400,"seq_no_in_day":1,"attenuation_durations":{"low":1900,"medium":0,"high":0},"matched_key_count":2,"days_since_last_exposure":1,"maximum_risk_score":1,"risk_score_sum":1}],"duration_seconds":1900,"date_most_recent_exposure":1597395600,"matched_key_count":2}]}`
+	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":1900,"medium":0,"high":0},"matchedKeyCount":2,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":1900,"dateMostRecentExposure":1597395600,"matchedKeyCount":2}]}`
 
 	assert.Equal(t, expected, string(response))
 }
@@ -254,16 +265,16 @@ func TestNonDeterministicDayAvgAboveThreshold(t *testing.T) {
 func TestNoExposureError(t *testing.T) {
 	requestData := []byte(`
         {
-            "new_exposure_summary":
+            "newExposureSummary":
             {
-                "date_received": 1597482000,
-                "timezone_offset": 32400,
-                "seq_no_in_day": 1,
-                "attenuation_durations": {"low": 0, "medium": 0, "high": 0},
-                "matched_key_count": 0,
-                "days_since_last_exposure": 0,
-                "maximum_risk_score": 0,
-                "risk_score_sum": 0
+                "dateReceived": 1597482000,
+                "timezoneOffset": 32400,
+                "seqNoInDay": 1,
+                "attenuationDurations": {"low": 0, "medium": 0, "high": 0},
+                "matchedKeyCount": 0,
+                "daysSinceLastExposure": 0,
+                "maximumRiskScore": 0,
+                "riskScoreSum": 0
             }
         }`)
 
@@ -282,4 +293,3 @@ func TestNoExposureError(t *testing.T) {
 	assert.Equal(t, "{}", string(response))
 	assert.Equal(t, "Matched key count was 0.", scoreError.Error())
 }
-

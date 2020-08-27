@@ -94,7 +94,7 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
 		}
 
 		// Check if there were other exposures on the same day, where the
-		// matched_key_count was 1, and if so aggregate and see if we exceed the
+		// matchedKeyCount was 1, and if so aggregate and see if we exceed the
 		// threshold in a day.
 		unusedExposuresSameDay := FilterExposuresByDate(
 			&request.UnusedExposureSummaries, GetExposureDay(&request.NewExposureSummary))

@@ -7,12 +7,12 @@ Tells mobile app whether or not to notify everyone, whom an infected user has me
 1. App gets EN Exposure Configuration from SERVER (`/v1/configuration`)
 2. App passes configuration to GAEN API
 3. GAEN runs exposure check and returns ExposureSummary
-4. (If matched_key_count: 0, discard, done)
+4. (If matchedKeyCount: 0, discard, done)
 
 5. App constructs modified ExposureSummary object using structure from /v1/score input:
-    1. Adds date_received (read comments in definition below)
-    2. Timezone_offset
-    3. Seq_no_in_day: this is saying it’s the n:th ExposureSummary we received today.
+    1. Adds dateReceived (read comments in definition below)
+    2. timezoneOffset
+    3. seqNoInDay: this is saying it’s the n:th ExposureSummary we received today.
 
 6. App sends new ExposureSummary, stores UnusedExposureSummaries to server
 7. Server returns Notification array (might be empty) with any new notifications, contains ExposureSummaries on which these notifications were based
@@ -25,7 +25,7 @@ Tells mobile app whether or not to notify everyone, whom an infected user has me
 
 ### State saved in app:
 
-- Map/dictionary of unused exposure summaries (14 days), keyed by “date_received:seq_no_in_day”
+- Map/dictionary of unused exposure summaries (14 days), keyed by “dateReceived:seqNoInDay”
 - Notification array (14 days)
 - Sequence # for ExposureSummary in day
 
