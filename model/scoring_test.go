@@ -250,3 +250,36 @@ func TestNonDeterministicDayAvgAboveThreshold(t *testing.T) {
 
 	assert.Equal(t, expected, string(response))
 }
+
+func TestNoExposureError(t *testing.T) {
+	requestData := []byte(`
+        {
+            "new_exposure_summary":
+            {
+                "date_received": 1597482000,
+                "timezone_offset": 32400,
+                "seq_no_in_day": 1,
+                "attenuation_durations": {"low": 0, "medium": 0, "high": 0},
+                "matched_key_count": 0,
+                "days_since_last_exposure": 0,
+                "maximum_risk_score": 0,
+                "risk_score_sum": 0
+            }
+        }`)
+
+	var parsedRequest ExposureNotificationRequest
+	error := json.Unmarshal(requestData, &parsedRequest)
+	if error != nil {
+		log.Println(error)
+	}
+
+	responseData, scoreError := ScoreV1(&parsedRequest)
+
+	response, error := json.Marshal(responseData)
+	if error != nil {
+		log.Println(error)
+	}
+	assert.Equal(t, "{}", string(response))
+	assert.Equal(t, "Matched key count was 0.", scoreError.Error())
+}
+

@@ -80,8 +80,7 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
 	empty_response := &ExposureNotificationResponse{}
 
 	if request.NewExposureSummary.MatchedKeyCount == 0 {
-		return empty_response, errors.New(
-			"Matched key count was 0, this shouldn't have been sent.")
+		return empty_response, errors.New("Matched key count was 0.")
 	}
 
 	weightedDuration := WeightedDuration(&request.NewExposureSummary)
