@@ -1,11 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"log"
 
-	"github.com/Path-Check/Scoring-Service/model"
+	"github.com/Path-Check/Scoring-Service/scoring/common"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
@@ -18,39 +17,17 @@ var (
 // It uses Amazon API Gateway request/responses provided by the aws-lambda-go/events package,
 // You may also use other event sources (S3, Kinesis etc), or JSON-decoded primitive types such as 'string'.
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-
-	// stdout and stderr are sent to AWS CloudWatch Logs
-	log.Printf("Processing Lambda request ID: %s\n", request.RequestContext.RequestID)
-
-	// If HTTP request body is empty, throw error
-	if len(request.Body) < 1 {
-		return events.APIGatewayProxyResponse{}, ErrRequestBodyEmpty
-	}
-	log.Println("API Gateway request body:")
-	log.Println(request.Body)
-
-	enReq := model.ExposureNotificationRequest{}
-	err := json.Unmarshal([]byte(request.Body), &enReq)
+	// Call the generic handler common to all Clouds.
+	statusCode, responseString, err := handler.GenericHandler(request.Body)
 	if err != nil {
-		log.Println("Can't unmarshal APIGatewayProxyRequest body")
-	}
-
-	enRes, err := model.ScoreV1(&enReq)
-	if err != nil {
-		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
-	}
-
-	response, err := json.Marshal(&enRes)
-	if err != nil {
-		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
-	}
-	log.Println("Scoring response:")
-	log.Println(string(response))
+		// stdout and stderr are sent to AWS CloudWatch Logs
+		log.Printf("Error: %s", err.Error())
+        }
 
 	return events.APIGatewayProxyResponse{
-		Body:       string(response),
-		StatusCode: 200,
-	}, nil
+		Body:       responseString,
+		StatusCode: statusCode,
+	}, err
 }
 
 func main() {
