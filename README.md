@@ -14,9 +14,6 @@ https://cdn.projectaurora.cloud/dev/cfg/v1.config.json
 https://cdn.projectaurora.cloud/cfg/v1.6.config.json  
 https://cdn.projectaurora.cloud/dev/cfg/v1.6.config.json
 
-Scoring server has this URL:
-https://api.scoring.projectaurora.cloud/scoring
-
 2. App passes configuration to GAEN API
 3. GAEN runs exposure check and returns ExposureSummary
 4. (If matchedKeyCount: 0, discard, done)
@@ -27,6 +24,10 @@ https://api.scoring.projectaurora.cloud/scoring
     3. seqNoInDay: this is saying it’s the nth ExposureSummary we received today.
 
 6. App sends new ExposureSummary, stores UnusedExposureSummaries to server
+
+Scoring server has this URL:
+https://api.scoring.projectaurora.cloud/scoring
+
 7. Server returns Notification array (might be empty) with any new notifications, contains ExposureSummaries on which these notifications were based
 
 8. App:
