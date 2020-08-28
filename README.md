@@ -82,7 +82,7 @@ https://cdn.projectaurora.cloud/dev/cfg/v1.6.config.json
     - cd into the target directory (ex: cd scoring/aws)
     - run 'make'
 
-Makefile does this:
+[Makefile](https://github.com/Path-Check/Scoring-Service/blob/master/scoring/aws/Makefile) does this:
 1. Initializes Terraform (init.done)
 2. Gets Golang packages, then compiles/builds a binary (scoring)
 3. Makes ZIP file from compiled build (scoring.zip)
