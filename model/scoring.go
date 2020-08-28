@@ -1,11 +1,21 @@
 package model
 
 import "errors"
+import "fmt"
+
+var (
+  // Buckets are capped at 30 minutes of exposure each.
+  maxBucketDuration = 30 * 60
+)
+
+func MaxWeightedDuration() {
+  // TODO: use values from config for weights.
+  return int((1.0 + 0.5 + 0.0) * float32(maxBucketDuration))
+}
 
 func WeightedDuration(exposureSummary *ExposureSummary) int {
 	// TODO: use values from config
 	return int(1*float32(exposureSummary.AttenuationDurations.Low) +
-		// TODO: Does this do what I want it to do?
 		0.5*float32(exposureSummary.AttenuationDurations.Medium) +
 		0*float32(exposureSummary.AttenuationDurations.High))
 }
@@ -119,9 +129,11 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
 			// was at least one day that was over the threshold.
 			return CreateNotification(&request.NewExposureSummary), nil
 		}
+	} else if request.NewExposureSummary.MatchedKeyCount >= 4 {
+		if weightedDuration >= MaxWeightedDuration() {
+			return CreateNotification(&request.NewExposureSummary), nil
+		}
 	}
-
-	// TODO: Add case for when MatchedKeyCount is 4+.
 
 	return empty_response, nil
 }
