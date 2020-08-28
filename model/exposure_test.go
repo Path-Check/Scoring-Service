@@ -14,7 +14,7 @@ func TestParseRequest(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 180, "medium": 60, "high": 500},
                 "matchedKeyCount": 1,
@@ -25,7 +25,7 @@ func TestParseRequest(t *testing.T) {
             "unusedExposureSummaries":
             [{
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 2,
                 "attenuationDurations": {"low": 0, "medium": 300, "high": 300},
                 "matchedKeyCount": 1,
@@ -72,7 +72,7 @@ func TestWriteResponse(t *testing.T) {
 	}
 
 	expected :=
-		`{"notifications":[{"exposureSummaries":[{"dateReceived":1597654800,"timezoneOffset":0,"seqNoInDay":2,"attenuationDurations":{"low":1800,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":0,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":1800,"dateOfExposure":1597482000}]}`
+		`{"notifications":[{"exposureSummaries":[{"dateReceived":1597654800,"timeZoneOffset":0,"seqNoInDay":2,"attenuationDurations":{"low":1800,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":0,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":1800,"dateOfExposure":1597482000}]}`
 
 	assert.Equal(t, expected, string(response))
 }

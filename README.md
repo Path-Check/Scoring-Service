@@ -11,7 +11,7 @@ Tells mobile app whether or not to notify everyone, whom an infected user has me
 
 5. App constructs modified ExposureSummary object using structure from /v1/score input:
     1. Adds dateReceived (read comments in definition below)
-    2. timezoneOffset
+    2. timeZoneOffset
     3. seqNoInDay: this is saying it’s the n:th ExposureSummary we received today.
 
 6. App sends new ExposureSummary, stores UnusedExposureSummaries to server

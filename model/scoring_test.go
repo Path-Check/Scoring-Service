@@ -14,7 +14,7 @@ func TestOneExposure(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 900, "medium": 0, "high": 0},
                 "matchedKeyCount": 1,
@@ -48,7 +48,7 @@ func TestOneExposure(t *testing.T) {
 		log.Println(error)
 	}
 
-	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":900,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":900,"dateOfExposure":1597395600}]}`
+	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timeZoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":900,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":900,"dateOfExposure":1597395600}]}`
 
 	assert.Equal(t, expected, string(response))
 }
@@ -59,7 +59,7 @@ func TestInsufficientExposure(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 90, "medium": 0, "high": 0},
                 "matchedKeyCount": 1,
@@ -95,7 +95,7 @@ func TestAggregatedExposuresDeterministicDay(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 400, "medium": 0, "high": 0},
                 "matchedKeyCount": 1,
@@ -106,7 +106,7 @@ func TestAggregatedExposuresDeterministicDay(t *testing.T) {
             "unusedExposureSummaries":
             [{
                 "dateReceived": 1597395600,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 600, "medium": 0, "high": 0},
                 "matchedKeyCount": 1,
@@ -128,7 +128,7 @@ func TestAggregatedExposuresDeterministicDay(t *testing.T) {
 		log.Println(error)
 	}
 
-	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":400,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1},{"dateReceived":1597395600,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":600,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":0,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":1000,"dateOfExposure":1597395600}]}`
+	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timeZoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":400,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1},{"dateReceived":1597395600,"timeZoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":600,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":0,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":1000,"dateOfExposure":1597395600}]}`
 
 	assert.Equal(t, expected, string(response))
 }
@@ -142,7 +142,7 @@ func TestAggregatedExposuresDeterministicDayDifferentDays(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 400, "medium": 0, "high": 0},
                 "matchedKeyCount": 1,
@@ -153,7 +153,7 @@ func TestAggregatedExposuresDeterministicDayDifferentDays(t *testing.T) {
             "unusedExposureSummaries":
             [{
                 "dateReceived": 1597395600,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 600, "medium": 0, "high": 0},
                 "matchedKeyCount": 1,
@@ -189,7 +189,7 @@ func TestAggregatedExposuresNonDeterministicDay(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 400, "medium": 0, "high": 0},
                 "matchedKeyCount": 1,
@@ -200,7 +200,7 @@ func TestAggregatedExposuresNonDeterministicDay(t *testing.T) {
             "unusedExposureSummaries":
             [{
                 "dateReceived": 1597395600,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 600, "medium": 0, "high": 0},
                 "matchedKeyCount": 2,
@@ -235,7 +235,7 @@ func TestNonDeterministicDayAvgAboveThreshold(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 1900, "medium": 0, "high": 0},
                 "matchedKeyCount": 2,
@@ -257,7 +257,7 @@ func TestNonDeterministicDayAvgAboveThreshold(t *testing.T) {
 		log.Println(error)
 	}
 
-	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":1900,"medium":0,"high":0},"matchedKeyCount":2,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":1900,"dateMostRecentExposure":1597395600,"matchedKeyCount":2}]}`
+	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timeZoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":1900,"medium":0,"high":0},"matchedKeyCount":2,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":1900,"dateMostRecentExposure":1597395600,"matchedKeyCount":2}]}`
 
 	assert.Equal(t, expected, string(response))
 }
@@ -272,7 +272,7 @@ func TestManyMatchedKeysCapReached(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 1800, "medium": 1800, "high": 0},
                 "matchedKeyCount": 4,
@@ -283,7 +283,7 @@ func TestManyMatchedKeysCapReached(t *testing.T) {
             "unusedExposureSummaries":
             [{
                 "dateReceived": 1597395600,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 600, "medium": 0, "high": 0},
                 "matchedKeyCount": 2,
@@ -306,7 +306,7 @@ func TestManyMatchedKeysCapReached(t *testing.T) {
 	}
 
 	expected :=
-`{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timezoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":1800,"medium":1800,"high":0},"matchedKeyCount":4,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":2700,"dateMostRecentExposure":1597395600,"matchedKeyCount":4}]}`
+`{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timeZoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":1800,"medium":1800,"high":0},"matchedKeyCount":4,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":2700,"dateMostRecentExposure":1597395600,"matchedKeyCount":4}]}`
 
 	assert.Equal(t, expected, string(response))
 }
@@ -324,7 +324,7 @@ func TestManyMatchedKeysBelowCaps(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 1800, "medium": 0, "high": 0},
                 "matchedKeyCount": 4,
@@ -335,7 +335,7 @@ func TestManyMatchedKeysBelowCaps(t *testing.T) {
             "unusedExposureSummaries":
             [{
                 "dateReceived": 1597395600,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 600, "medium": 0, "high": 0},
                 "matchedKeyCount": 2,
@@ -366,7 +366,7 @@ func TestNoExposureError(t *testing.T) {
             "newExposureSummary":
             {
                 "dateReceived": 1597482000,
-                "timezoneOffset": 32400,
+                "timeZoneOffset": 32400,
                 "seqNoInDay": 1,
                 "attenuationDurations": {"low": 0, "medium": 0, "high": 0},
                 "matchedKeyCount": 0,
