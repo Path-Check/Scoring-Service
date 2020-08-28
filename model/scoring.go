@@ -2,12 +2,12 @@ package model
 
 import "errors"
 
-func WeightedDuration(exposureSummary *ExposureSummary) int {
+func WeightedDuration(exposureSummary *ExposureSummary, attenuationWeights []float32) int {
 	// TODO: use values from config
-	return int(1*float32(exposureSummary.AttenuationDurations.Low) +
+	return int(attenuationWeights[0]*float32(exposureSummary.AttenuationDurations.Low) +
 		// TODO: Does this do what I want it to do?
-		0.5*float32(exposureSummary.AttenuationDurations.Medium) +
-		0*float32(exposureSummary.AttenuationDurations.High))
+		attenuationWeights[1]*float32(exposureSummary.AttenuationDurations.Medium) +
+		attenuationWeights[2]*float32(exposureSummary.AttenuationDurations.High))
 }
 
 // Calculate the day that the last exposure happened.
@@ -15,9 +15,9 @@ func GetExposureDay(exposureSummary *ExposureSummary) int {
 	return exposureSummary.DateReceived - exposureSummary.DaysSinceLastExposure*24*3600
 }
 
-func CreateNotificationAggregated(newExposureSummary *ExposureSummary, unusedExposures *[]ExposureSummary, weightedDuration int) *ExposureNotificationResponse {
+func CreateNotificationAggregated(newExposureSummary *ExposureSummary, unusedExposures *[]ExposureSummary, weightedDuration int, attenuationWeights []float32) *ExposureNotificationResponse {
 	// Start off the response by creating one using the newest ExposureSummary.
-	response := CreateNotification(newExposureSummary)
+	response := CreateNotification(newExposureSummary, attenuationWeights)
 
 	notification := &response.Notifications[0]
 	// Append the additional ExposureSummaries.
@@ -37,11 +37,11 @@ func CreateNotificationAggregated(newExposureSummary *ExposureSummary, unusedExp
 	return response
 }
 
-func CreateNotification(exposureSummary *ExposureSummary) *ExposureNotificationResponse {
+func CreateNotification(exposureSummary *ExposureSummary, attenuationWeights []float32) *ExposureNotificationResponse {
 	response := &ExposureNotificationResponse{
 		Notifications: []Notification{
 			{ExposureSummaries: []ExposureSummary{*exposureSummary},
-				DurationSeconds: WeightedDuration(exposureSummary)},
+				DurationSeconds: WeightedDuration(exposureSummary, attenuationWeights)},
 		},
 	}
 	notification := &response.Notifications[0]
@@ -77,20 +77,21 @@ func FilterExposuresByDate(exposureSummaries *[]ExposureSummary, date int) *[]Ex
 }
 
 func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationResponse, error) {
-	empty_response := &ExposureNotificationResponse{}
+	emptyResponse := &ExposureNotificationResponse{}
+	attenuationWeights := request.ExposureConfiguration.AttenuationBucketWeights
 
 	if request.NewExposureSummary.MatchedKeyCount == 0 {
-		return empty_response, errors.New("Matched key count was 0.")
+		return emptyResponse, errors.New("Matched key count was 0.")
 	}
 
-	weightedDuration := WeightedDuration(&request.NewExposureSummary)
+	weightedDuration := WeightedDuration(&request.NewExposureSummary, attenuationWeights)
 
 	if request.NewExposureSummary.MatchedKeyCount == 1 {
 		// TODO: Use config here.
-		if weightedDuration >= 15*60 {
+		if weightedDuration >= request.ExposureConfiguration.TriggerThresholdWeightedDuration*60 {
 			// We had a single exposure and it met the threshold, now create a
 			// notification for it.
-			return CreateNotification(&request.NewExposureSummary), nil
+			return CreateNotification(&request.NewExposureSummary, attenuationWeights), nil
 		}
 
 		// Check if there were other exposures on the same day, where the
@@ -100,14 +101,14 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
 			&request.UnusedExposureSummaries, GetExposureDay(&request.NewExposureSummary))
 		// Add in any older exposures that occurred on the same day.
 		for _, unusedExposure := range *unusedExposuresSameDay {
-			weightedDuration += WeightedDuration(&unusedExposure)
+			weightedDuration += WeightedDuration(&unusedExposure, attenuationWeights)
 		}
 		// TODO: Again, use config.
-		if weightedDuration >= 15*60 {
-			return CreateNotificationAggregated(&request.NewExposureSummary, unusedExposuresSameDay, weightedDuration), nil
+		if weightedDuration >= request.ExposureConfiguration.TriggerThresholdWeightedDuration*60 {
+			return CreateNotificationAggregated(&request.NewExposureSummary, unusedExposuresSameDay, weightedDuration, attenuationWeights), nil
 		}
 
-		return empty_response, nil
+		return emptyResponse, nil
 	} else if request.NewExposureSummary.MatchedKeyCount == 2 ||
 		request.NewExposureSummary.MatchedKeyCount == 3 {
 		// TODO: use config here.
@@ -117,11 +118,11 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
 		if weightedDuration/request.NewExposureSummary.MatchedKeyCount >= 15*60 {
 			// The average duration was over the threshold, so we know there
 			// was at least one day that was over the threshold.
-			return CreateNotification(&request.NewExposureSummary), nil
+			return CreateNotification(&request.NewExposureSummary, attenuationWeights), nil
 		}
 	}
 
 	// TODO: Add case for when MatchedKeyCount is 4+.
 
-	return empty_response, nil
+	return emptyResponse, nil
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestHandlerSuccess(t *testing.T) {
+func TestGenericHandler(t *testing.T) {
 	requestData := []byte(`
 	{
 		"newExposureSummary":
@@ -20,6 +20,17 @@ func TestHandlerSuccess(t *testing.T) {
 			"daysSinceLastExposure": 1,
 			"maximumRiskScore": 1,
 			"riskScoreSum": 1
+		},
+		"exposureConfiguration":
+		{
+			"minimumRiskScore": 0,
+			"attenuationDurationThresholds": [53, 60],
+			"attenuationLevelValues": [1,2,3,4,5,6,7,8],
+			"daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+			"durationLevelValues": [1,2,3,4,5,6,7,8],
+			"transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+			"attenuationBucketWeights": [1, 0.5, 0],
+			"triggerThresholdWeightedDuration": 15
 		}
 	}`)
 
@@ -46,7 +57,7 @@ func TestEmptyBodyError(t *testing.T) {
 	assert.Equal(t, "", response)
 }
 
-func TestMalformedRequstError(t *testing.T) {
+func TestMalformedRequestError(t *testing.T) {
 	status, response, err := GenericHandler("i am not a valid JSON string")
 	assert.Equal(t, 400, status)
 	assert.Equal(t, ErrUnmarshalJSON, err)
