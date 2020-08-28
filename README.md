@@ -83,10 +83,12 @@ https://cdn.projectaurora.cloud/dev/cfg/v1.6.config.json
     - run 'make'
 
 [Makefile](https://github.com/Path-Check/Scoring-Service/blob/master/scoring/aws/Makefile) does this:
-1. Initializes Terraform (init.done)
-2. Gets Golang packages, then compiles a binary (scoring)
-3. Makes ZIP file from compiled build (scoring.zip)
-4. Applies changes and deploys application (deploy.done)
+1. Destroys infrastructure and deletes `scoring.zip` file and `scoring` build (clean)
+2. Initializes Terraform (init.done)
+3. Gets Golang packages, then compiles a binary (scoring)
+4. Makes `scoring.zip` file from compiled build (scoring.zip)
+5. Applies changes and deploys application (deploy.done)
+6. Runs `curl` command to test our scoring service
 
 ## How to run in Development
 
