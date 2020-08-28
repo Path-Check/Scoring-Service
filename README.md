@@ -42,8 +42,7 @@ Tells mobile app whether or not to notify everyone, whom an infected user has me
 - [x] Basic Go Implementation (Raymond, David)
 - [ ] Scoring Go Implementation (Lina)
   - [ ] Finish v1 scoring (Lina)
-  - [ ] Make it use config instead of current hardcoded values (Lina? Raymond?
-Dave?)
+  - [X] Make it use config instead of current hardcoded values (Raymond)
 - [X] Deployment on AWS (Raymond, David)
 - [X] cURL calls for the Mobile team and this document down below (Raymond)
 - [ ] Update Mobile app to use the basic scoring function (Matt?)
