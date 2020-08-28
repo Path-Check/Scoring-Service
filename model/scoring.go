@@ -1,14 +1,13 @@
 package model
 
 import "errors"
-import "fmt"
 
 var (
   // Buckets are capped at 30 minutes of exposure each.
   maxBucketDuration = 30 * 60
 )
 
-func MaxWeightedDuration() {
+func MaxWeightedDuration() int {
   // TODO: use values from config for weights.
   return int((1.0 + 0.5 + 0.0) * float32(maxBucketDuration))
 }
