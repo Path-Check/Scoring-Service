@@ -1,25 +1,34 @@
 # Scoring Service
 
-Tells mobile app whether or not to notify everyone, whom an infected user has met the last 14 days, if user is infected. It takes a Summary of Exposures for a given `exposureconfiguration.json` (which changes based on health authority) and returns array of Notifications if certain scoring criteria are met.
+Tells mobile app whether or not to notify everyone, whom an infected user has met the last 14 days, if user is infected. It takes a Summary of Exposures for a given `config.json` (which changes based on health authority) and returns array of Notifications if certain scoring criteria are met.
 
 # General Flow
 
-1. App gets EN Exposure Configuration from SERVER (`/v1/configuration`)
+1. App gets `config.json` from AWS S3 or GCP Cloud Storage bucket.
+
+[Scoring v1 algorithm](https://developer.apple.com/documentation/exposurenotification/enexposureconfiguration/calculating_the_exposure_risk_value_in_exposurenotification_version_1) has this config:  
+https://cdn.projectaurora.cloud/cfg/v1.config.json  
+https://cdn.projectaurora.cloud/dev/cfg/v1.config.json
+
+[Scoring v1.6 algorithm](https://developer.apple.com/documentation/exposurenotification/enexposureconfiguration) has this config:  
+https://cdn.projectaurora.cloud/cfg/v1.6.config.json  
+https://cdn.projectaurora.cloud/dev/cfg/v1.6.config.json
+
 2. App passes configuration to GAEN API
 3. GAEN runs exposure check and returns ExposureSummary
 4. (If matchedKeyCount: 0, discard, done)
 
-5. App constructs modified ExposureSummary object using structure from /v1/score input:
+5. App constructs modified ExposureSummary object using structure from /v1/scoring input:
     1. Adds dateReceived (read comments in definition below)
     2. timeZoneOffset
-    3. seqNoInDay: this is saying it’s the n:th ExposureSummary we received today.
+    3. seqNoInDay: this is saying it’s the nth ExposureSummary we received today.
 
 6. App sends new ExposureSummary, stores UnusedExposureSummaries to server
 7. Server returns Notification array (might be empty) with any new notifications, contains ExposureSummaries on which these notifications were based
 
-8. App does:
-    1. removes any ExposureSummaries from UnusedExposureSummaries that are present in new notifications
-    2. If no new notification: stores the new ExposureSummary in UnusedExposureSummaries
+8. App:
+    1. Removes any ExposureSummaries from UnusedExposureSummaries that are present in new notifications
+    2. If no new notification: stores new ExposureSummary in UnusedExposureSummaries
     3. Stores new Notifications if exist
     4. Displays notifications to users based on new Notification object
 
@@ -32,7 +41,7 @@ Tells mobile app whether or not to notify everyone, whom an infected user has me
 ## Environment
 
 - GAEN v1.0 for now
-- Working with ExposureSummary (Not ExposureInfo to avoid direct OS Notifications to users)
+- Working with ExposureSummary (not ExposureInfo to avoid direct OS Notifications to users)
 - Must be deployed in Google/AWS/Azure clouds.
 
 ## TODO (Week of Aug 17)
@@ -42,7 +51,7 @@ Tells mobile app whether or not to notify everyone, whom an infected user has me
 - [x] Basic Go Implementation (Raymond, David)
 - [ ] Scoring Go Implementation (Lina)
   - [ ] Finish v1 scoring (Lina)
-  - [X] Make it use config instead of current hardcoded values (Raymond)
+  - [X] Make it use `config.json` instead of current hardcoded values (Raymond)
 - [X] Deployment on AWS (Raymond, David)
 - [X] cURL calls for the Mobile team and this document down below (Raymond)
 - [ ] Update Mobile app to use the basic scoring function (Matt?)
@@ -73,6 +82,11 @@ Tells mobile app whether or not to notify everyone, whom an infected user has me
     - cd into the target directory (ex: cd scoring/aws)
     - run 'make'
 
+Makefile does this:
+1. Initializes Terraform (init.done)
+2. Gets Golang packages, then compiles/builds a binary (scoring)
+3. Makes ZIP file from compiled build (scoring.zip)
+4. Applies changes and deploys application (deploy.done)
 
 ## How to run in Development
 
@@ -94,8 +108,8 @@ make
 
 ```
 go test -v ./... (all tests, period)
-go test -v ./model (all tests in /model)
-go test -v ./scoring/aws (all tests in /scoring/aws)
+go test -v ./model (only tests in /model)
+go test -v ./scoring/aws (only tests in /scoring/aws)
 ```
 
 With AWS CLI and Terraform installed:
