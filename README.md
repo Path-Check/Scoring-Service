@@ -14,6 +14,9 @@ https://cdn.projectaurora.cloud/dev/cfg/v1.config.json
 https://cdn.projectaurora.cloud/cfg/v1.6.config.json  
 https://cdn.projectaurora.cloud/dev/cfg/v1.6.config.json
 
+Scoring server has this URL:
+https://api.scoring.projectaurora.cloud/scoring
+
 2. App passes configuration to GAEN API
 3. GAEN runs exposure check and returns ExposureSummary
 4. (If matchedKeyCount: 0, discard, done)
