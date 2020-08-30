@@ -3,7 +3,7 @@ package model
 type ExposureNotificationRequest struct {
 	NewExposureSummary      ExposureSummary       `json:"newExposureSummary"`
 	UnusedExposureSummaries []ExposureSummary     `json:"unusedExposureSummaries,omitempty"`
-	ExposureConfiguration   ExposureConfiguration `json:"exposureConfiguration"`
+	ExposureConfiguration   ExposureConfiguration `json:"exposureConfiguration,omitempty"`
 }
 
 type ExposureConfiguration struct {

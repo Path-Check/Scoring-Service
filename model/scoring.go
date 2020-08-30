@@ -1,10 +1,13 @@
 package model
 
-import "errors"
+import (
+	"errors"
+)
 
 var (
 	// Buckets are capped at 30 minutes of exposure each.
 	maxBucketDuration = 30 * 60
+	ErrNoConfig       = errors.New("No config.json input to scoring function")
 )
 
 func MaxWeightedDuration(attenuationWeights []float32) int {
@@ -87,6 +90,10 @@ func FilterExposuresByDate(exposureSummaries *[]ExposureSummary, date int) *[]Ex
 func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationResponse, error) {
 	emptyResponse := &ExposureNotificationResponse{}
 	attenuationWeights := request.ExposureConfiguration.AttenuationBucketWeights
+
+	if len(request.ExposureConfiguration.AttenuationDurationThresholds) == 0 {
+		return emptyResponse, ErrNoConfig
+	}
 
 	if request.NewExposureSummary.MatchedKeyCount == 0 {
 		return emptyResponse, errors.New("Matched key count was 0.")
