@@ -19,7 +19,7 @@ type ExposureConfiguration struct {
 
 type ExposureSummary struct {
 	DateReceived          int                  `json:"dateReceived"`
-	TimezoneOffset        int                  `json:"timezoneOffset"`
+	TimezoneOffset        int                  `json:"timeZoneOffset"`
 	SeqNoInDay            int                  `json:"seqNoInDay"`
 	AttenuationDurations  AttenuationDurations `json:"attenuationDurations"`
 	MatchedKeyCount       int                  `json:"matchedKeyCount"`

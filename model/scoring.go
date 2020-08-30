@@ -2,12 +2,21 @@ package model
 
 import "errors"
 
-func WeightedDuration(exposureSummary *ExposureSummary, attenuationWeights []float32) int {
+var (
+  // Buckets are capped at 30 minutes of exposure each.
+  maxBucketDuration = 30 * 60
+)
+
+func MaxWeightedDuration() int {
+  // TODO: use values from config for weights.
+  return int((1.0 + 0.5 + 0.0) * float32(maxBucketDuration))
+}
+
+func WeightedDuration(exposureSummary *ExposureSummary) int {
 	// TODO: use values from config
-	return int(attenuationWeights[0]*float32(exposureSummary.AttenuationDurations.Low) +
-		// TODO: Does this do what I want it to do?
-		attenuationWeights[1]*float32(exposureSummary.AttenuationDurations.Medium) +
-		attenuationWeights[2]*float32(exposureSummary.AttenuationDurations.High))
+	return int(1*float32(exposureSummary.AttenuationDurations.Low) +
+		0.5*float32(exposureSummary.AttenuationDurations.Medium) +
+		0*float32(exposureSummary.AttenuationDurations.High))
 }
 
 // Calculate the day that the last exposure happened.
@@ -119,6 +128,10 @@ func ScoreV1(request *ExposureNotificationRequest) (*ExposureNotificationRespons
 			// The average duration was over the threshold, so we know there
 			// was at least one day that was over the threshold.
 			return CreateNotification(&request.NewExposureSummary, attenuationWeights), nil
+		}
+	} else if request.NewExposureSummary.MatchedKeyCount >= 4 {
+		if weightedDuration >= MaxWeightedDuration() {
+			return CreateNotification(&request.NewExposureSummary), nil
 		}
 	}
 

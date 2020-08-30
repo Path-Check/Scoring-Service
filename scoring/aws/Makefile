@@ -3,7 +3,7 @@
 
 # test calls deploy.done then issues a curl request to the deployed lambda function and API Gateway
 test: deploy.done
-	curl -fsSL -d '{"newExposureSummary":{"dateReceived": 1597482000,"timezoneOffset": 32400,"seqNoInDay": 1,"attenuationDurations": {"low": 900, "medium": 0, "high": 0},"matchedKeyCount": 1,"daysSinceLastExposure": 1,"maximumRiskScore": 1,"riskScoreSum": 1}}' -H "Content-Type: application/json" -X POST "$$(terraform output url)"
+	curl -fsSL -d '{"newExposureSummary":{"dateReceived": 1597482000,"timeZoneOffset": 32400,"seqNoInDay": 1,"attenuationDurations": {"low": 900, "medium": 0, "high": 0},"matchedKeyCount": 1,"daysSinceLastExposure": 1,"maximumRiskScore": 1,"riskScoreSum": 1}}' -H "Content-Type: application/json" -X POST "$$(terraform output url)"
 
 # clean destroys the infrastructure and removes the builds
 clean:

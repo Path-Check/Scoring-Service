@@ -14,7 +14,7 @@ func TestHandler(t *testing.T) {
 		"newExposureSummary":
 		{
 			"dateReceived": 1597482000,
-			"timezoneOffset": 32400,
+			"timeZoneOffset": 32400,
 			"seqNoInDay": 1,
 			"attenuationDurations": {"low": 900, "medium": 0, "high": 0},
 			"matchedKeyCount": 1,
@@ -65,7 +65,7 @@ func TestHandler(t *testing.T) {
 			// Test scoring lambda function responds right
 			// when exposure summary data put in API Gateway request
 			request: apigRequest,
-			expect:  "{\"notifications\":[{\"exposureSummaries\":[{\"dateReceived\":1597482000,\"timezoneOffset\":32400,\"seqNoInDay\":1,\"attenuationDurations\":{\"low\":900,\"medium\":0,\"high\":0},\"matchedKeyCount\":1,\"daysSinceLastExposure\":1,\"maximumRiskScore\":1,\"riskScoreSum\":1}],\"durationSeconds\":900,\"dateOfExposure\":1597395600}]}",
+			expect:  "{\"notifications\":[{\"exposureSummaries\":[{\"dateReceived\":1597482000,\"timeZoneOffset\":32400,\"seqNoInDay\":1,\"attenuationDurations\":{\"low\":900,\"medium\":0,\"high\":0},\"matchedKeyCount\":1,\"daysSinceLastExposure\":1,\"maximumRiskScore\":1,\"riskScoreSum\":1}],\"durationSeconds\":900,\"dateOfExposure\":1597395600}]}",
 			err:     nil,
 		},
 		{

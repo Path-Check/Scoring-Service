@@ -13,7 +13,7 @@ func TestGenericHandler(t *testing.T) {
 		"newExposureSummary":
 		{
 			"dateReceived": 1597482000,
-			"timezoneOffset": 32400,
+			"timeZoneOffset": 32400,
 			"seqNoInDay": 1,
 			"attenuationDurations": {"low": 900, "medium": 0, "high": 0},
 			"matchedKeyCount": 1,
@@ -40,7 +40,7 @@ func TestGenericHandler(t *testing.T) {
 	rawJSON, _ := rm.MarshalJSON()
 	body := string(rawJSON)
 
-	expectedResponse := "{\"notifications\":[{\"exposureSummaries\":[{\"dateReceived\":1597482000,\"timezoneOffset\":32400,\"seqNoInDay\":1,\"attenuationDurations\":{\"low\":900,\"medium\":0,\"high\":0},\"matchedKeyCount\":1,\"daysSinceLastExposure\":1,\"maximumRiskScore\":1,\"riskScoreSum\":1}],\"durationSeconds\":900,\"dateOfExposure\":1597395600}]}"
+	expectedResponse := "{\"notifications\":[{\"exposureSummaries\":[{\"dateReceived\":1597482000,\"timeZoneOffset\":32400,\"seqNoInDay\":1,\"attenuationDurations\":{\"low\":900,\"medium\":0,\"high\":0},\"matchedKeyCount\":1,\"daysSinceLastExposure\":1,\"maximumRiskScore\":1,\"riskScoreSum\":1}],\"durationSeconds\":900,\"dateOfExposure\":1597395600}]}"
 
 	// Test a successful request.
 	status, response, err := GenericHandler(body)
