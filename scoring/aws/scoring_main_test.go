@@ -21,6 +21,17 @@ func TestScoringHandler(t *testing.T) {
 			"daysSinceLastExposure": 1,
 			"maximumRiskScore": 1,
 			"riskScoreSum": 1
+		},
+		"exposureConfiguration":
+		{
+			"minimumRiskScore": 0,
+			"attenuationDurationThresholds": [53, 60],
+			"attenuationLevelValues": [1,2,3,4,5,6,7,8],
+			"daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+			"durationLevelValues": [1,2,3,4,5,6,7,8],
+			"transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+			"attenuationBucketWeights": [1, 0.5, 0],
+			"triggerThresholdWeightedDuration": 15
 		}
 	}`)
 

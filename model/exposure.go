@@ -1,8 +1,20 @@
 package model
 
 type ExposureNotificationRequest struct {
-	NewExposureSummary      ExposureSummary   `json:"newExposureSummary"`
-	UnusedExposureSummaries []ExposureSummary `json:"unusedExposureSummaries,omitempty"`
+	NewExposureSummary      ExposureSummary       `json:"newExposureSummary"`
+	UnusedExposureSummaries []ExposureSummary     `json:"unusedExposureSummaries,omitempty"`
+	ExposureConfiguration   ExposureConfiguration `json:"exposureConfiguration,omitempty"`
+}
+
+type ExposureConfiguration struct {
+	MinimumRiskScore                 int       `json:"minimumRiskScore"`
+	AttenuationDurationThresholds    []int     `json:"attenuationDurationThresholds"`
+	AttenuationLevelValues           []int     `json:"attenuationLevelValues"`
+	DaysSinceLastExposureLevelValues []int     `json:"daysSinceLastExposureLevelValues"`
+	DurationLevelValues              []int     `json:"durationLevelValues"`
+	TransmissionRiskLevelValues      []int     `json:"transmissionRiskLevelValues"`
+	AttenuationBucketWeights         []float32 `json:"attenuationBucketWeights"`
+	TriggerThresholdWeightedDuration int       `json:"triggerThresholdWeightedDuration"`
 }
 
 type ExposureSummary struct {

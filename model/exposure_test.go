@@ -32,7 +32,18 @@ func TestParseRequest(t *testing.T) {
                 "daysSinceLastExposure": 3,
                 "maximumRiskScore": 1,
                 "riskScoreSum": 1
-            }]
+			}],
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
+            }
         }`)
 
 	var parsedRequest ExposureNotificationRequest
@@ -41,8 +52,9 @@ func TestParseRequest(t *testing.T) {
 		log.Println(error)
 	}
 
-	assert.Equal(t, 1597482000, parsedRequest.UnusedExposureSummaries[0].DateReceived,
-		"dateReceived did not parse correctly.")
+	assert.Equal(t, 1597482000, parsedRequest.UnusedExposureSummaries[0].DateReceived, "dateReceived did not parse correctly")
+	assert.Equal(t, []float32{1, 0.5, 0}, parsedRequest.ExposureConfiguration.AttenuationBucketWeights,
+		"attenuationBucketWeights did not parse correctly.")
 }
 
 func TestWriteResponse(t *testing.T) {

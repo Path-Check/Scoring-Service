@@ -2,54 +2,86 @@ package model
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOneExposure(t *testing.T) {
-	requestData := []byte(`
-        {
-            "newExposureSummary":
-            {
-                "dateReceived": 1597482000,
-                "timeZoneOffset": 32400,
-                "seqNoInDay": 1,
-                "attenuationDurations": {"low": 900, "medium": 0, "high": 0},
-                "matchedKeyCount": 1,
-                "daysSinceLastExposure": 1,
-                "maximumRiskScore": 1,
-                "riskScoreSum": 1
-            },
-            "exposureConfiguration":
-            {
-                "minimumRiskScore": 0,
-                "attenuationDurationThresholds": [53, 60],
-                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
-                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
-                "durationLevelValues": [1,2,3,4,5,6,7,8],
-                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
-                "attenuationBucketWeights": [1, 0.5, 0],
-                "triggerThresholdWeightedDuration": 15
-            }
+func TestNoConfig(t *testing.T) {
+	requestDataNoConfig := []byte(`
+	    {
+	        "newExposureSummary":
+	        {
+	            "dateReceived": 1597482000,
+	            "timeZoneOffset": 32400,
+	            "seqNoInDay": 1,
+	            "attenuationDurations": {"low": 900, "medium": 0, "high": 0},
+	            "matchedKeyCount": 1,
+	            "daysSinceLastExposure": 1,
+	            "maximumRiskScore": 1,
+	            "riskScoreSum": 1
+	        }
         }`)
 
 	var parsedRequest ExposureNotificationRequest
-	error := json.Unmarshal(requestData, &parsedRequest)
-	if error != nil {
-		log.Println(error)
+
+	err := json.Unmarshal(requestDataNoConfig, &parsedRequest)
+	if err != nil {
+		log.Println(err)
 	}
 
-	responseData, _ := ScoreV1(&parsedRequest)
+	responseData, err := ScoreV1(&parsedRequest)
+	response, _ := json.Marshal(responseData)
 
-	response, error := json.Marshal(responseData)
-	if error != nil {
-		log.Println(error)
-	}
+	assert.IsType(t, ErrNoConfig, err)
+	assert.Equal(t, "{}", string(response))
+}
+
+func TestOneExposure(t *testing.T) {
+	requestData := []byte(`
+	    {
+	        "newExposureSummary":
+	        {
+	            "dateReceived": 1597482000,
+	            "timeZoneOffset": 32400,
+	            "seqNoInDay": 1,
+	            "attenuationDurations": {"low": 900, "medium": 0, "high": 0},
+	            "matchedKeyCount": 1,
+	            "daysSinceLastExposure": 1,
+	            "maximumRiskScore": 1,
+	            "riskScoreSum": 1
+	        },
+	        "exposureConfiguration":
+	        {
+	            "minimumRiskScore": 0,
+	            "attenuationDurationThresholds": [53, 60],
+	            "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+	            "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+	            "durationLevelValues": [1,2,3,4,5,6,7,8],
+	            "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+	            "attenuationBucketWeights": [1, 0.5, 0],
+	            "triggerThresholdWeightedDuration": 15
+	        }
+	    }`)
+
+	var parsedRequest ExposureNotificationRequest
 
 	expected := `{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timeZoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":900,"medium":0,"high":0},"matchedKeyCount":1,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":900,"dateOfExposure":1597395600}]}`
 
+	err := json.Unmarshal(requestData, &parsedRequest)
+	if err != nil {
+		log.Println(err)
+	}
+
+	responseData, _ := ScoreV1(&parsedRequest)
+	response, err := json.Marshal(responseData)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	assert.IsType(t, nil, err)
 	assert.Equal(t, expected, string(response))
 }
 
@@ -66,6 +98,17 @@ func TestInsufficientExposure(t *testing.T) {
                 "daysSinceLastExposure": 1,
                 "maximumRiskScore": 1,
                 "riskScoreSum": 1
+            },
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
             }
         }`)
 
@@ -113,7 +156,18 @@ func TestAggregatedExposuresDeterministicDay(t *testing.T) {
                 "daysSinceLastExposure": 0,
                 "maximumRiskScore": 1,
                 "riskScoreSum": 1
-            }]
+            }],
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
+            }
         }`)
 
 	var parsedRequest ExposureNotificationRequest
@@ -160,7 +214,18 @@ func TestAggregatedExposuresDeterministicDayDifferentDays(t *testing.T) {
                 "daysSinceLastExposure": 3,
                 "maximumRiskScore": 1,
                 "riskScoreSum": 1
-            }]
+            }],
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
+            }
         }`)
 
 	var parsedRequest ExposureNotificationRequest
@@ -207,7 +272,18 @@ func TestAggregatedExposuresNonDeterministicDay(t *testing.T) {
                 "daysSinceLastExposure": 0,
                 "maximumRiskScore": 1,
                 "riskScoreSum": 1
-            }]
+            }],
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
+            }
         }`)
 
 	var parsedRequest ExposureNotificationRequest
@@ -242,6 +318,17 @@ func TestNonDeterministicDayAvgAboveThreshold(t *testing.T) {
                 "daysSinceLastExposure": 1,
                 "maximumRiskScore": 1,
                 "riskScoreSum": 1
+            },
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
             }
         }`)
 
@@ -290,7 +377,18 @@ func TestManyMatchedKeysCapReached(t *testing.T) {
                 "daysSinceLastExposure": 0,
                 "maximumRiskScore": 1,
                 "riskScoreSum": 1
-            }]
+            }],
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
+            }
         }`)
 
 	var parsedRequest ExposureNotificationRequest
@@ -306,7 +404,7 @@ func TestManyMatchedKeysCapReached(t *testing.T) {
 	}
 
 	expected :=
-`{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timeZoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":1800,"medium":1800,"high":0},"matchedKeyCount":4,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":2700,"dateMostRecentExposure":1597395600,"matchedKeyCount":4}]}`
+		`{"notifications":[{"exposureSummaries":[{"dateReceived":1597482000,"timeZoneOffset":32400,"seqNoInDay":1,"attenuationDurations":{"low":1800,"medium":1800,"high":0},"matchedKeyCount":4,"daysSinceLastExposure":1,"maximumRiskScore":1,"riskScoreSum":1}],"durationSeconds":2700,"dateMostRecentExposure":1597395600,"matchedKeyCount":4}]}`
 
 	assert.Equal(t, expected, string(response))
 }
@@ -342,7 +440,18 @@ func TestManyMatchedKeysBelowCaps(t *testing.T) {
                 "daysSinceLastExposure": 0,
                 "maximumRiskScore": 1,
                 "riskScoreSum": 1
-            }]
+            }],
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
+            }
         }`)
 
 	var parsedRequest ExposureNotificationRequest
@@ -373,6 +482,17 @@ func TestNoExposureError(t *testing.T) {
                 "daysSinceLastExposure": 0,
                 "maximumRiskScore": 0,
                 "riskScoreSum": 0
+            },
+            "exposureConfiguration":
+            {
+                "minimumRiskScore": 0,
+                "attenuationDurationThresholds": [53, 60],
+                "attenuationLevelValues": [1,2,3,4,5,6,7,8],
+                "daysSinceLastExposureLevelValues": [1,2,3,4,5,6,7,8],
+                "durationLevelValues": [1,2,3,4,5,6,7,8],
+                "transmissionRiskLevelValues": [1,2,3,4,5,6,7,8],
+                "attenuationBucketWeights": [1, 0.5, 0],
+                "triggerThresholdWeightedDuration": 15
             }
         }`)
 
