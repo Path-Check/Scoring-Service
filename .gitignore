@@ -2,3 +2,4 @@
 .terraform
 scoring.zip
 *.tfstate
+logs
