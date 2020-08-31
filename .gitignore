@@ -1,5 +1,5 @@
 .vscode
 .terraform
-scoring
 scoring.zip
 *.tfstate
+logs
