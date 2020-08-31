@@ -48,7 +48,7 @@ https://api.scoring.projectaurora.cloud/scoring
 - Working with ExposureSummary (not ExposureInfo to avoid direct OS Notifications to users)
 - Must be deployed in Google/AWS/Azure clouds.
 
-## TODO (Week of Aug 17)
+## TODO
 
 - [x] Scoring API Design (Lina)
   - [ ] Add scoring API design for ExposureWindows (Apple version 2) to doc (Lina)
@@ -60,6 +60,7 @@ https://api.scoring.projectaurora.cloud/scoring
 - [X] cURL calls for the Mobile team and this document down below (Raymond)
 - [ ] Update Mobile app to use the basic scoring function (Matt?)
 - [X] UnitTests with testing data captured by the mobile team (Raymond)
+- [X] Add basic logger and tests in `/model` and `/logging/aws`. Saves JSON files in `/logs`. (Raymond)
 
 # How to Install in Production
 
