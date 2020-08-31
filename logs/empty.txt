@@ -1,0 +1,1 @@
+Keep this empty /logs folder in GitHub, so when we run tests, it saves JSON files here.
